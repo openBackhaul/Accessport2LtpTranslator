@@ -5,7 +5,7 @@ info:
 
 servers:
   - url: 'https://10.118.125.157:1000'
-    description: 'Initial deployment'
+    description: 'Initial deployment.'
 
 paths:
 ########################################################################################################################
@@ -40,7 +40,7 @@ paths:
                 new-application-name:
                   type: string
                   description: >
-                    'Name of application that shall be target of the handover process
+                    'A good Name of application that shall be target of the handover process
                     find or create [/core-model-1-4:control-construct/logical-termination-point=*-0-0-1-http-c-0010/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-capability/application-name]'
                 new-application-release:
                   type: string
