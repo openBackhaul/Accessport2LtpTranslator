@@ -1,6 +1,6 @@
 ﻿openapi: 3.0.0
 info:
-  title: Port_to_LTP Converter xxl
+  title: AccessPort_to_LTP Converter 
   version: 0.0.2
 
 servers:
@@ -40,7 +40,7 @@ paths:
                 new-application-name:
                   type: string
                   description: >
-                    'A good Name of application that shall be target of the handover process
+                    'A very good Name of application that shall be target of the handover process
                     find or create [/core-model-1-4:control-construct/logical-termination-point=*-0-0-1-http-c-0010/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-capability/application-name]'
                 new-application-release:
                   type: string
