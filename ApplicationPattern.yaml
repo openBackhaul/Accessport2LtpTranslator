@@ -1,6 +1,6 @@
 ﻿openapi: 3.0.0
 info:
-  title: Port_to_LTP Converter xxl
+  title: AccessPort_to_LTP Converter 
   version: 0.0.2
 
 servers:
