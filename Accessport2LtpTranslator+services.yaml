@@ -1,3 +1,4 @@
+
 servers:
 
   operation-servers:
@@ -41,14 +42,14 @@ servers:
       individual:
         - service-name: /v1/start-application-in-generic-representation
           uuid: op-s-3000
-        ## TODO: Add Services specific to this application
+        ## Services specific to this application
   http-server:
-    own-application-name: ## TODO: Add OwnApplicationName
-    own-release-number: ## TODO: Add OwnReleaseNumber (e.g. 1.0.0)
+    own-application-name: ## OwnApplicationName
+    own-release-number: ## OwnReleaseNumber (e.g. 0.0.1)
     uuid: http-s-0000
   tpc-server:
-    own-ip-address: ## TODO: Add OwnIpAddress
-    own-tcp-port: ## TODO: Add OwnTcpPort
+    own-ip-address: ## OwnIpAddress
+    own-tcp-port: ## OwnTcpPort
     uuid: tcp-s-0000
 
 
@@ -57,11 +58,11 @@ clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: ## TODO: Add Number of Release to be substituted (e.g. 1.0.0)
+      release-number: ## Number of Release to be substituted (e.g. 0.0.1)
       uuid: http-c-0000
     tcp-client:
-      ip-address: ## TODO: Add IpAddress of Release to be substituted
-      tcp-port: ## TODO: Add TcpPort of Release to be substituted
+      ip-address: ## IpAddress of Release to be substituted
+      tcp-port: ## TcpPort of Release to be substituted
       uuid: tcp-c-0000
     operation-clients:
       own-oam:
@@ -75,24 +76,24 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: ## TODO: Add Number of substituting Release (e.g. 1.0.1)
+      release-number: ## Number of substituting Release (e.g. 0.0.2)
       uuid: http-c-0010
     tcp-client:
-      ip-address: ## TODO: Add IpAddress of substituting Release
-      tcp-port: ## TODO: Add TcpPort of substituting Release
+      ip-address: ## IpAddress of substituting Release
+      tcp-port: ## TcpPort of substituting Release
       uuid: tcp-c-0010
     operation-clients:
       own-oam:
         basic:
         individual:
-          ## TODO: Add Services required for handing-over configuration or data during update
+          ## Services required for handing-over configuration or data during update
       service:
         basic:
         individual:
 
   - http-client:
       application-name: RegistryOffice
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-0020
     tcp-client:
       ip-address: 10.118.125.157
@@ -112,13 +113,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: TypeApprovalRegister
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-2030
     tcp-client:
       ip-address: 10.118.125.157
@@ -130,13 +131,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: ExecutionAndTraceLog
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-0040
     tcp-client:
       ip-address: 10.118.125.157
@@ -150,13 +151,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: OamLog
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-0050
     tcp-client:
       ip-address: 10.118.125.157
@@ -170,13 +171,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: AdministratorAdministration
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-0060
     tcp-client:
       ip-address: 10.118.125.157
@@ -190,13 +191,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: ApplicationLayerTopology
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-0070
     tcp-client:
       ip-address: 10.118.125.157
@@ -220,13 +221,13 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
       application-name: OperationKeyManagement
-      release-number: 1.0.0
+      release-number: 0.0.1
       uuid: http-c-2080
     tcp-client:
       ip-address: 10.118.125.157
@@ -238,24 +239,24 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
 
   - http-client:
-      application-name: ## TODO: Add Name of application to be addressed
-      release-number: ## TODO: Add Release number of application to be addressed
-      uuid: ## TODO: Add UUID of the HttpClient
+      application-name: CurrentController
+      release-number: 0.0.1
+      uuid: http-c-2300
     tcp-client:
-      ip-address: ## TODO: Add IP address of application to be addressed
-      tcp-port: ## TODO: Add TCP port of application to be addressed
-      uuid: ## TODO: Add UUID of the TcpClient
+      ip-address: 10.118.125.157
+      tcp-port: 2000
+      uuid: tcp-c-2300
     operation-clients:
       own-oam:
         basic:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Clients specific to this application
