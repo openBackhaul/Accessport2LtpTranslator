@@ -132,9 +132,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
       application-name: ExecutionAndTraceLog
@@ -152,9 +152,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
       application-name: OamLog
@@ -172,9 +172,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
       application-name: AdministratorAdministration
@@ -192,9 +192,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
       application-name: ApplicationLayerTopology
@@ -222,9 +222,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
       application-name: OperationKeyManagement
@@ -240,24 +240,24 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
 
   - http-client:
-      application-name: ## TODO: Add Name of application to be addressed
-      release-number: ## TODO: Add Release number of application to be addressed
-      uuid: ## TODO: Add UUID of the HttpClient
+      application-name: ## Done: Add Name of application to be addressed
+      release-number: ## Done: Add Release number of application to be addressed
+      uuid: ## Done: Add UUID of the HttpClient
     tcp-client:
-      ip-address: ## TODO: Add IP address of application to be addressed
-      tcp-port: ## TODO: Add TCP port of application to be addressed
-      uuid: ## TODO: Add UUID of the TcpClient
+      ip-address: ## Done: Add IP address of application to be addressed
+      tcp-port: ## Done: Add TCP port of application to be addressed
+      uuid: ## Done: Add UUID of the TcpClient
     operation-clients:
       own-oam:
         basic:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          ## Done: Add Clients specific to this application, but addressing all other applications
         individual:
-          ## TODO: Add Clients specific to this application
+          ## Done: Add Clients specific to this application
