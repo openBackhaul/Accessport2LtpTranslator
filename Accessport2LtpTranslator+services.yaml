@@ -41,14 +41,16 @@ servers:
       individual:
         - service-name: /v1/start-application-in-generic-representation
           uuid: op-s-3000
-        ## TODO: Add Services specific to this application
+        - service-name: /v1/translate-equipment-to-ltp ## done
+          uuid: op-s-3001
+
   http-server:
-    own-application-name: ## TODO: Add OwnApplicationName
-    own-release-number: ## TODO: Add OwnReleaseNumber (e.g. 1.0.0)
+    own-application-name: Accessport2LtpTranslator  ## done
+    own-release-number: 1.0.0                       ##done
     uuid: http-s-0000
   tpc-server:
-    own-ip-address: ## TODO: Add OwnIpAddress
-    own-tcp-port: ## TODO: Add OwnTcpPort
+    own-ip-address: 10.118.125.157                  ## done
+    own-tcp-port: 2022                              ## done
     uuid: tcp-s-0000
 
 
@@ -57,11 +59,11 @@ clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: ## TODO: Add Number of Release to be substituted (e.g. 1.0.0)
+      release-number: 1.0.0      ## done
       uuid: http-c-0000
     tcp-client:
-      ip-address: ## TODO: Add IpAddress of Release to be substituted
-      tcp-port: ## TODO: Add TcpPort of Release to be substituted
+      ip-address: 10.118.125.157 ## done
+      tcp-port: 2022             ## done
       uuid: tcp-c-0000
     operation-clients:
       own-oam:
@@ -75,17 +77,17 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: ## TODO: Add Number of substituting Release (e.g. 1.0.1)
+      release-number: 1.0.0              ## done
       uuid: http-c-0010
     tcp-client:
-      ip-address: ## TODO: Add IpAddress of substituting Release
-      tcp-port: ## TODO: Add TcpPort of substituting Release
+      ip-address: 10.118.125.157        ## done
+      tcp-port: 2022                    ## done
       uuid: tcp-c-0010
     operation-clients:
       own-oam:
         basic:
         individual:
-          ## TODO: Add Services required for handing-over configuration or data during update
+          
       service:
         basic:
         individual:
@@ -112,9 +114,9 @@ clients:
         individual:
       service:
         basic:
-          ## TODO: Add Clients specific to this application, but addressing all other applications
+          
         individual:
-          ## TODO: Add Clients specific to this application
+          
 
   - http-client:
       application-name: TypeApprovalRegister
