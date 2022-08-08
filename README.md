@@ -39,4 +39,4 @@
 - [Accessport2LtpTranslator/issues](../../issues)
 
 ### Comments
-This application will be specified within framework of the workshop series for ApplicationOwners.
+This application will be specified within the training for ApplicationOwners.
