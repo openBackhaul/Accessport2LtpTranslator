@@ -42,17 +42,15 @@ servers:
       individual:
         - service-name: /v1/start-application-in-generic-representation
           uuid: xx-1-0-0-op-s-is-000
-        - service-name: /v1/translate-equipment-to-ltp ## done
-          uuid: op-s-3001
-
+        ## TODO: Add Services specific to this application
   http-server:
-    own-application-name: Accessport2LtpTranslator ## done
-    own-release-number: 1.0.0
-    uuid: xx-1-0-0-http-s-bm-000 ## todo
-  tpc-server:
-    own-ip-address: 10.118.125.157 ## done
-    own-tcp-port: 2022             ##done
-    uuid: xx-1-0-0-tcp-s-bm-000    ## todo
+    own-application-name: ## TODO: Add OwnApplicationName
+    own-release-number: ## TODO: Add OwnReleaseNumber (e.g. 1.0.0)
+    uuid: xx-1-0-0-http-s-bm-000
+  tcp-server:
+    own-ip-address: ## TODO: Add OwnIpAddress
+    own-tcp-port: ## TODO: Add OwnTcpPort
+    uuid: xx-1-0-0-tcp-s-bm-000
 
 
 
@@ -60,11 +58,11 @@ clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: 1.0.0
+      release-number: ## TODO: Add Number of Release to be substituted (e.g. 1.0.0)
       uuid: xx-1-0-0-http-c-bm-or-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157 ## done
-      tcp-port: 2022             ## done
+      ip-address: ## TODO: Add IpAddress of Release to be substituted
+      tcp-port: ## TODO: Add TcpPort of Release to be substituted
       uuid: xx-1-0-0-tcp-c-bm-or-1-0-0-000
     operation-clients:
       own-oam:
@@ -78,12 +76,12 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: 1.0.0
+      release-number: ## TODO: Add Number of substituting Release (e.g. 1.0.1)
       uuid: xx-1-0-0-http-c-bm-nr-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157  ## done
-      tcp-port: 2022   ## done
-      uuid: xx-1-0-0-tcp-c-bm-nr-1-0-0-000 ## todo
+      ip-address: ## TODO: Add IpAddress of substituting Release
+      tcp-port: ## TODO: Add TcpPort of substituting Release
+      uuid: xx-1-0-0-tcp-c-bm-nr-1-0-0-000
     operation-clients:
       own-oam:
         basic:
@@ -98,8 +96,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-bm-ro-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1000
+      ip-address: 1.1.3.1
+      tcp-port: 3001
       uuid: xx-1-0-0-tcp-c-bm-ro-1-0-0-000
     operation-clients:
       own-oam:
@@ -124,8 +122,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-is-tar-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1001
+      ip-address: 1.1.3.2
+      tcp-port: 3002
       uuid: xx-1-0-0-tcp-c-is-tar-1-0-0-000
     operation-clients:
       own-oam:
@@ -142,8 +140,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-bm-eatl-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1002
+      ip-address: 1.1.3.3
+      tcp-port: 3003
       uuid: xx-1-0-0-tcp-c-bm-eatl-1-0-0-000
     operation-clients:
       own-oam:
@@ -162,8 +160,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-bm-ol-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1003
+      ip-address: 1.1.3.4
+      tcp-port: 3004
       uuid: xx-1-0-0-tcp-c-bm-ol-1-0-0-000
     operation-clients:
       own-oam:
@@ -182,8 +180,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-bm-aa-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1004
+      ip-address: 1.1.3.5
+      tcp-port: 3005
       uuid: xx-1-0-0-tcp-c-bm-aa-1-0-0-000
     operation-clients:
       own-oam:
@@ -202,8 +200,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-bm-alt-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1005
+      ip-address: 1.1.3.6
+      tcp-port: 3006
       uuid: xx-1-0-0-tcp-c-bm-alt-1-0-0-000
     operation-clients:
       own-oam:
@@ -232,8 +230,8 @@ clients:
       release-number: 1.0.0
       uuid: xx-1-0-0-http-c-is-okm-1-0-0-000
     tcp-client:
-      ip-address: 10.118.125.157
-      tcp-port: 1006
+      ip-address: 1.1.3.7
+      tcp-port: 3007
       uuid: xx-1-0-0-tcp-c-is-okm-1-0-0-000
     operation-clients:
       own-oam:
