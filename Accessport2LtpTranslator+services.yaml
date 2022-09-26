@@ -1,5 +1,5 @@
 servers:
-## TODO: Search and replace all "xx" in the uuid by the official abbreviation of the ApplicationName
+## TODO:  Search and replace all "xx" in the uuid by the official abbreviation of the ApplicationName
 
   operation-servers:
     own-oam:
