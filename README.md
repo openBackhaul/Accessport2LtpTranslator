@@ -6,7 +6,7 @@
 - Accessport2LtpTranslator is continuously going through the MicroWaveDeviceInventory and updating its internal translation table. **Update on 30th of September 2022**: It has been decided not to maintain an internal data store of translation results, but to calculate them on demand.
 - Concrete translation results are provided on individual service requests.
 - Potential format of the response 
-````
+  ````
   {
     [
       {
@@ -17,7 +17,7 @@
       }
     ]
   }
-````
+  ````
 
 ### ApplicationOwner
 - Thomas Seitz
