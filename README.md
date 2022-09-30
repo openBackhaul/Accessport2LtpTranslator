@@ -5,6 +5,19 @@
 - It is translating the access port identified from within x:akta plus a given protocol layer name into the UUID of an LTP, which is associated with the corresponding Connector object on the ONF interface. **Update on 30th of September 2022**: During ApplicationOwner call, it has been discussed to return [LtpUuid, LayerProtocolName, Clients, Server] of the entire stack of LTPs on top of a physical connector. 
 - Accessport2LtpTranslator is continuously going through the MicroWaveDeviceInventory and updating its internal translation table. **Update on 30th of September 2022**: It has been decided not to maintain an internal data store of translation results, but to calculate them on demand.
 - Concrete translation results are provided on individual service requests.
+- Potential format of the response 
+````
+  {
+    [
+      {
+        ownUuid,
+        layerProtocolName,
+        clientLtpUuid [ ],
+        serverLtpUuid [ ],
+      }
+    ]
+  }
+````
 
 ### ApplicationOwner
 - Thomas Seitz
