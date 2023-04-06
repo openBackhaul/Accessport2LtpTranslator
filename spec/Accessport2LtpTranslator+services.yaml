@@ -48,16 +48,16 @@ servers:
   http-server:
     own-application-name: Accessport2LtpTranslator
     own-release-number: 1.0.0
-    uuid: a2lt-1-0-0-http-s-000 ## before: a2lt-1-0-0-http-s-bm-000
+    uuid: a2lt-1-0-0-http-s-000        ##before: a2lt-1-0-0-http-s-bm-000
   tcp-server:
-    - description: Without TLS layer ##Transport Layer Security
+    - description: Without TLS layer   ##Transport Layer Security
       local-protocol: http
       own-ip-address: 1.1.4.3
       own-tcp-port: 4003
       uuid: a2lt-1-0-0-tcp-s-000
-    - description: With TLS layer ##Transport Layer Security
+    - description: With TLS layer       ##Transport Layer Security
       local-protocol: https
-      own-ip-address: 1.2.4.3 ## from https://github.com/openBackhaul/ApplicationPattern/blob/develop/doc/TestingApplications/Infrastructure/SdnLaboratory/FakeAddresses/IpAddresses.md
+      own-ip-address: 1.2.4.3            ## from https://github.com/openBackhaul/ApplicationPattern/blob/develop/doc/TestingApplications/Infrastructure/SdnLaboratory/FakeAddresses/IpAddresses.md
       own-tcp-port: 4203
       uuid: a2lt-1-0-0-tcp-s-001
 
@@ -75,7 +75,7 @@ clients:
       uuid: a2lt-1-0-0-tcp-c-es-1-0-0-000
     elasticsearch-client:
       uuid: a2lt-1-0-0-es-c-es-1-0-0-000
-      index-alias: ## TODO: Add IndexAlias
+      index-alias:                                ## TODO: Add IndexAlias
 
   - http-client:
       application-name: OldRelease
