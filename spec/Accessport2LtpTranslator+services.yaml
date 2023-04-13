@@ -221,7 +221,7 @@ clients:
       tcp-port: 3014
       uuid: a2lt-1-0-0-tcp-c-okm-2-0-1-000
 
-   - http-client:
+  - http-client:
       application-name: MicroWaveDeviceInventory
       release-number: 1.0.0
       uuid: a2lt-1-0-0-http-c-mwdi-1-0-0-000
