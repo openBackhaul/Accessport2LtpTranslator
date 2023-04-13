@@ -64,7 +64,7 @@ servers:
       own-ip-address: 1.1.4.3
       own-tcp-port: 4003
       uuid: a2lt-1-0-0-tcp-s-000
-    - description: With TLS layer       ##T ransport Layer Security
+    - description: With TLS layer       ## Transport Layer Security
       local-protocol: https
       own-ip-address: 1.2.4.3            ## from https://github.com/openBackhaul/ApplicationPattern/blob/develop/doc/TestingApplications/Infrastructure/SdnLaboratory/FakeAddresses/IpAddresses.md
       own-tcp-port: 4203
