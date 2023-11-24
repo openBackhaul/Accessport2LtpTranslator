@@ -52,7 +52,7 @@ servers:
         ## description:
         ##
 
-        - operation-name: /v1/translate-equipment-to-ltp
+        - operation-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
           uuid: a2lt-1-0-0-op-s-is-000
   http-server:
     own-application-name: Accessport2LtpTranslator
