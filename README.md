@@ -3,42 +3,58 @@ Delete this link at the end of the specification process:
 
 # Accessport2LtpTranslator
 
-### Location
+## Location
+
 The Accessport2LtpTranslator is part of the HighPerformanceNetworkInterface.
 
-### Description
-_Copy from Roadmap:_  
-The Accessport2LtpTranslator is supporting e.g. the Resolver in creating a valid RESTCONF URI. It is translating the access port identified from within x:akta plus a given protocol layer name into the UUID of an LTP, which is associated with the corresponding Connector object on the ONF interface. Accessport2LtpTranslator is continuously going through the MicroWaveDeviceInventory and updating its internal translation table. Concrete translation results are provided on individual service requests.  
-_Original text:_  
-- The Accessport2LtpTranslator is supporting e.g. the Resolver in creating a valid RESTCONF URI. 
-- It is translating the access port identified from within x:akta plus a given protocol layer name into the UUID of an LTP, which is associated with the corresponding Connector object on the ONF interface. **Update on 30th of September 2022**: During ApplicationOwner call, it has been discussed to return [LtpUuid, LayerProtocolName, Clients, Server] of the entire stack of LTPs on top of a physical connector. 
-- Accessport2LtpTranslator is continuously going through the MicroWaveDeviceInventory and updating its internal translation table. **Update on 30th of September 2022**: It has been decided not to maintain an internal data store of translation results, but to calculate them on demand.
+## Description
+
+The Accessport2LtpTranslator is supporting for instance the Resolver in creating a valid RESTCONF URI.
+In order to compare planning data and system settings as well as performance data, it should be possible to establish standardised relationships between the SDN models and current planning tools.
+Therefore the attribute sequenceID should be used.
+Each object (connector and contained-holder) beneath an common equipment object should have a unique sequenceId.
+Accessport2LtpTranslator is translating the given sequenceId values (for instance from a legacy tool like x:akta or APT) into the UUID of a LTP.
+The relevant data is collected on demand when the requestor is calling the /v1/translate-equipment-to-ltp.
+The input parameters should be handed over via request body.
+The data is retrieved from the MicrowaveDeviceInventory from cache.
+
 - Concrete translation results are provided on individual service requests.
-- Potential format of the response 
+- Potential format of the response
   ````
   {
     [
       {
-        ownUuid,
-        layerProtocolName,
-        clientLtpUuid [ ],
-        serverLtpUuid [ ],
-      }
+        "uuid": "“ETY-2134639620“",
+        "client-ltp": "“PES-2134639620“",
+        "server-ltp": null,
+        "layer-protocol-name": "„wire-interface-2-0…“"
+      },
+      {
+        "uuid": "“PES-2134639620“",
+        "client-ltp": "“ETC-2134639620“",
+        "server-ltp": ETY-2134639620,
+        "layer-protocol-name": "„pure-ethenet-structur-2-0…“"
+      },
+
     ]
   }
   ````
 
-### Relevance
+## Relevance
+
 The Accessport2LtpTranslator serves as a "phone book". 
 Other applications require it for addressing live network resources.
 
-### Resources
+## Resources
+
 - [Specification](./spec/)
 - [TestSuite](./testing/)
 - [Implementation](./server/)
 
 ### Dependencies
+
 - [MicroWaveDeviceInventory](https://github.com/openBackhaul/MicroWaveDeviceInventory)
 
 ### Comments
+
 This application will be specified during [training for ApplicationOwners](https://gist.github.com/openBackhaul/5aabdbc90257b83b9fe7fc4da059d3cd).

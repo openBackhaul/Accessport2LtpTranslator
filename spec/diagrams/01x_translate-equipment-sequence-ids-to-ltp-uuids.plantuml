@@ -1,7 +1,7 @@
 @startuml 01x_translate-equipment-sequence-ids-to-ltp-uuids
 skinparam responseMessageBelowArrow true
 
-title RequestForTranslatingEquipmentSequenceIdsCauses
+title RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData
 
 participant "external" as external
 participant "A2LT://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
@@ -11,10 +11,10 @@ participant "MWDI://.../equipment={uuid}?fields=contained-holder;connector" as e
   ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder;connector" as equipment'
 participant "MWDI://...control-construct?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))" as ltpList
   ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))" as ltpList'
-participant "MWDI://...control-construct/logical-termination-point=uuid?fields=" as clientLtp
-  ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point=uuid?fields=" as clientLtp'
+participant "MWDI://...control-construct/logical-termination-point={uuid}?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)" as clientLtp
+  ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)" as clientLtp'
 
-external -> offeredService : {mountName, \n stringOfConcatenatedSequenceIds} \n (apiKeyAuth)
+external -> offeredService : {mountName, \n stringOfConcatenatedSequenceIds, \n topLevelEquipmentUuid (optional)} \n (apiKeyAuth)
 
 note over offeredService
   <u> ReadingUuidsOfTopLevelEquipment </u>
@@ -23,10 +23,19 @@ offeredService -> topLevel : {mountName}
 topLevel --> offeredService : {[TopLevelUuids]}
 
 note over offeredService
-  With first uuid in [TopLevelUuids]
+  If (topLevelEquipmentUuid provided and not contained in [TopLevelUuids])
+     or (topLevelEquipmentUuid not provided and [TopLevelUuids].size>1)
+    then exit with error response
+end note
+offeredService --> external : <i>error response code</i>
+note over offeredService
+  if topLevelEquipmentUuid provided and contained in [TopLevelUuids]
+    then uuid=topLevelEquipmentUuid
+  else
+    then uuid=first uuid in [TopLevelUuids]
   <u> ReadingEquipmentDataOfTopLevelElement </u>
 end note
-offeredService -> equipment : {1st uuid from [TopLevelUuids]}
+offeredService -> equipment : {uuid}
 equipment --> offeredService : {[containedHolders], [connectors]}
 
 group Repeat until last entry in stringOfConcatenatedSequenceIds
@@ -59,18 +68,20 @@ note over offeredService
   <u> ReadingServingLtp </u>
 end note
   offeredService -> clientLtp : {mountName, uuid==LowestLtp}
-  clientLtp --> offeredService : {[clientLtps], [serverLtps], layer-protocol-name}
+  clientLtp --> offeredService : {[clientLtps], [serverLtps], [layer-protocol(layer-protocol-name)]}
 
-group Repeat until [clientLtps]==empty
+group Repeat recursively for first uuid from '[clientLtps]'
   note over offeredService
-        <u> ReadingClientLtp </u>
+    for first iteration [clientLtps] = ReadingServingLtp.[clientLtps],
+    for subsequent iterations [clientLtps] = child-[clientLtps]
+      <u> ReadingClientLtp </u>
   end note
-  offeredService -> clientLtp : {mountName, uuid == one after another of [clientLtps] }
-  clientLtp --> offeredService : {[clientLtps], [serverLtps], layer-protocol-name}
+  offeredService -> clientLtp : {mountName, uuid}
+  clientLtp --> offeredService : {[clientLtps], [serverLtps], [layer-protocol(layer-protocol-name)]}
 end
 
 
 
-offeredService --> external : {list of-\n(uuid,[clientLtps], [serverLtps],\nlayer-protocol-name)}
+offeredService --> external : {list of-\n(uuid,[clientLtps], [serverLtps],\n[layer-protocol-names])}
 
 @enduml
