@@ -140,19 +140,11 @@ profile-instances:
     capability:
       string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingServingLtp'
     configuration:
-      string-value: ''  #todo: ?fields=client-ltp...
+      string-value: 'server-ltp;client-ltp;layer-protocol(layer-protocol-name)'
 
   - profile-name: 'StringProfile'
     uuid: 'a2lt-1-0-0-string-p-005'
     capability:
       string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingClientLtp'
     configuration:
-      string-value: '' #todo: ?fields=client-ltp...
-
-  # ggf. weitere
-  - profile-name: 'StringProfile'
-    uuid: 'a2lt-1-0-0-string-p-006'
-    capability:
-      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.'
-    configuration:
-      string-value: ''
+      string-value: 'server-ltp;client-ltp;layer-protocol(layer-protocol-name)'
