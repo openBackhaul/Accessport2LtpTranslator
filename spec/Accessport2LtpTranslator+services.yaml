@@ -55,6 +55,11 @@ servers:
       own-ip-address: 127.0.0.1
       own-tcp-port: 4003
       uuid: a2lt-1-0-0-tcp-s-000
+    - description: With TLS layer
+      local-protocol: https
+      own-ip-address: 127.0.0.1
+      own-tcp-port: 4003
+      uuid: a2lt-1-0-0-tcp-s-001
 
 
 clients:

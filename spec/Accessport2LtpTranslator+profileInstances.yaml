@@ -7,7 +7,7 @@ profile-instances:
       label: 'Inform about Application'
       display-in-new-browser-window: false
     configuration:
-      consequent-operation-reference: '/core-model-1-4:control-construct/logical-termination-point=*-1-0-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
+      consequent-operation-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
 
   - profile-name: 'ActionProfile'
     uuid: 'a2lt-1-0-0-action-p-001'
@@ -16,7 +16,7 @@ profile-instances:
       label: 'Release History'
       display-in-new-browser-window: false
     configuration:
-      consequent-operation-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-s-bs-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
+      consequent-operation-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-s-bs-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
 
   - profile-name: 'ActionProfile'
     uuid: 'a2lt-1-0-0-action-p-002'
@@ -48,7 +48,7 @@ profile-instances:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name'
 
   - profile-name: 'GenericResponseProfile'
-    uuid: 'a2lt-1-0-0-response-p-002'
+    uuid: 'a2lt-1-0-0-response-p-002' 
     capability:
       operation-name: '/v1/inform-about-application-in-generic-representation'
       static-field-name: 'releaseNumber'
@@ -58,7 +58,7 @@ profile-instances:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number'
 
   - profile-name: 'GenericResponseProfile'
-    uuid: 'a2lt-1-0-0-response-p-003'
+    uuid: 'a2lt-1-0-0-response-p-003' 
     capability:
       operation-name: '/v1/inform-about-application-in-generic-representation'
       static-field-name: 'applicationPurpose'
@@ -68,7 +68,7 @@ profile-instances:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-purpose'
 
   - profile-name: 'GenericResponseProfile'
-    uuid: 'a2lt-1-0-0-response-p-004'
+    uuid: 'a2lt-1-0-0-response-p-004' 
     capability:
       operation-name: '/v1/inform-about-application-in-generic-representation'
       static-field-name: 'dataUpdatePeriod'
@@ -106,3 +106,53 @@ profile-instances:
       datatype: string
     configuration:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=0/changes'
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-000'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment'
+    configuration:
+      string-value: 'top-level-equipment'
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-001'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement'
+    configuration:
+      string-value: 'contained-holder;connector'
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-002'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataInHolder'
+    configuration:
+      string-value: 'contained-holder;connector'
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-003'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingAugmentOfAllLtps'
+    configuration:
+      string-value: 'logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))'
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-004'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingServingLtp'
+    configuration:
+      string-value: ''  #todo: ?fields=client-ltp...
+
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-005'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingClientLtp'
+    configuration:
+      string-value: '' #todo: ?fields=client-ltp...
+
+  # ggf. weitere
+  - profile-name: 'StringProfile'
+    uuid: 'a2lt-1-0-0-string-p-006'
+    capability:
+      string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.'
+    configuration:
+      string-value: ''

@@ -1,7 +1,7 @@
 @startuml 01x_translate-equipment-sequence-ids-to-ltp-uuids
 skinparam responseMessageBelowArrow true
 
-title RequestForTranslatingEquipmentSequenceIdsCauses
+title RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData
 
 participant "external" as external
 participant "A2LT://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
