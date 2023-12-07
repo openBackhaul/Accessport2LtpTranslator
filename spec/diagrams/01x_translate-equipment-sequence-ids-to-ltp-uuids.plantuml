@@ -39,7 +39,7 @@ end note
 offeredService -> equipment : {uuid}
 equipment --> offeredService : {[containedHolders(occupying-fru,sequence-id)], [connectors(local-id,sequence-id)]}
 
-group Repeat for each sequenceId in stringOfConcatenatedSequenceIds #pink
+group Repeat for each sequenceId in stringOfConcatenatedSequenceIds
   note over offeredService
     Store all seen equipmentUuid, connectorLocalId pairs temporarly in memory for usage in subsequent steps
 
