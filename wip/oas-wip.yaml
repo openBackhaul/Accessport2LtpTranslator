@@ -385,18 +385,16 @@ paths:
                     example: '2-LIM 8xEth'
                   description: >
                     'The uuid of the next equipment to be retrieved.
-                    from: 
-                    with sequenceId = iterate over {$requestBody#string-of-concatenated-sequence-ids},
-                         and sequence-id of contained-holder and connector = position in the respective arrays
-
-                      TODO
-
-                      if (sequenceId==h*), 
-                       then uuid={$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
-                       of the holder instance with holder.sequence-id == sequenceId
-                      else if letter infront of sequenceId==c,
-                        then uuid = equipmentUuid = {$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/uuid}
-                        and connectorLocalId = local-id of instance of connector with sequence-id == sequenceId'
+                    Iterate over {$request.body#string-of-concatenated-sequence-ids}, with sequenceId = current item:
+                    If (sequenceId==h*) 
+                      then: uuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
+                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder.sequence-id}==sequenceId
+                    else if (sequenceId==c*)
+                      then: 
+                        uuid = equipmentUuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/uuid},
+                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.local-id}
+                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.sequence-id}==sequenceId
+                        (equipmentUuid, connectorLocalId)-pair is to be stored temporarily in memory
                 - name: fields
                   in: query
                   required: true
@@ -428,6 +426,8 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -437,16 +437,21 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'                                  
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
+                                  sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
+                                  sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
+                                  sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
