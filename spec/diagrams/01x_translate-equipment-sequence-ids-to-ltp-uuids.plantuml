@@ -44,12 +44,12 @@ group Repeat for each sequenceId in stringOfConcatenatedSequenceIds #pink
     Store all seen equipmentUuid, connectorLocalId pairs temporarly in memory for usage in subsequent steps
 
     IF (sequenceId == h*)
-      THEN nextUuid = containedHolder.occupying-fru of holder instance with sequence-id == sequenceId
+      THEN nextUuid = containedHolder.occupying-fru of holder instance with containedHolder.sequence-id == sequenceId
 
     IF (sequenceId == c*)
       THEN 
         equipmentUuid = nextUuid
-        connectorLocalId = connector.local-id connector instance with sequence-id == sequenceId
+        connectorLocalId = connector.local-id connector instance with connector.sequence-id == sequenceId
         <i>(store this equipmentUuid, connectorLocalId pair in memory)</i>
 
     <u> ReadingEquipmentDataInHolder </u>
