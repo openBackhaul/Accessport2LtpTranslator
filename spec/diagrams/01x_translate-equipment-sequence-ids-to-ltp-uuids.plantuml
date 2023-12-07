@@ -36,11 +36,13 @@ note over offeredService
 
   <u> ReadingEquipmentDataOfTopLevelElement </u>
 end note
+note over equipment #LightPink: sequence-id not yet implemented, but will come soon
 offeredService -> equipment : {uuid}
 equipment --> offeredService : {[containedHolders(occupying-fru,sequence-id)], [connectors(local-id,sequence-id)]}
 
 group Repeat for each sequenceId in stringOfConcatenatedSequenceIds
   note over offeredService
+    Note: sequenceIds are not unique across holders and connectors
     Store all seen equipmentUuid, connectorLocalId pairs temporarly in memory for usage in subsequent steps
 
     IF (sequenceId == h*)
