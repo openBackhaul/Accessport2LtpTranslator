@@ -438,7 +438,7 @@ paths:
       tags:
         - IndividualServices
       security:
-        - basicAuth: []
+        - apiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -458,10 +458,16 @@ paths:
                 top-level-equipment-uuid:
                   type: string
                   description: 'Uuid of the top-level-equipment. Optional parameter, which is only needed when there are multiple top level equipments.'
-              example:
-                mount-name: '513250010'
-                link-id: 'h1.c2.h3.c4'
-                top-level-equipment-uuid: '2-LIM 8xEth'
+            examples:
+                top-level-equipment-uuid-not-provided:
+                  value:
+                    mount-name: '513250002'
+                    link-id: 'h1.c3.h4.c5'                
+                top-level-equipment-uuid-provided:
+                  value:
+                    mount-name: '513250010'
+                    link-id: 'h1.c2.h3.c4'
+                    top-level-equipment-uuid: '2-LIM 8xEth'
       responses:
         '200':
           description: 'LTPs for accessport provided.'
@@ -680,7 +686,7 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'contained-holder(occupying-fru);connector(local-id)'
+                    example: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
                   description: >
                     'If different from empty string, a fields filter with the following value to be added to the request
                     from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-001/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
@@ -803,7 +809,7 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'contained-holder(occupying-fru);connector(local-id)'
+                    example: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
                   description: >
                     'If different from empty string, a fields filter with the following value to be added to the request
                     from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-002/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'

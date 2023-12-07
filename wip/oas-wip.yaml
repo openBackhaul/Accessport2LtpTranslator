@@ -1,0 +1,952 @@
+openapi: 3.0.0
+info:
+  title: Acessport2LtpTranslator
+  version: 1.0.0
+
+paths:
+
+  /v1/translate-equipment-sequence-ids-to-ltp-uuids:
+    post:
+      operationId: provideAcceptanceDataOfLinkEndpoint
+      summary: 'Provides the data required for the acceptance of a device'
+      tags:
+        - IndividualServices
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - mount-name
+                - string-of-concatenated-sequence-ids
+              properties:
+                mount-name:
+                  type: string
+                  description: 'Identifier of the device at the Controller'
+                string-of-concatenated-sequence-ids:
+                  type: string
+                  description: 'Concatenated sequence Ids of holders and connectors'
+                top-level-equipment-uuid:
+                  type: string
+                  description: 'Uuid of the top-level-equipment. Optional parameter, which is only needed when device contains multiple top level equipments.'
+            examples:
+                top-level-equipment-uuid-not-provided:
+                  value:
+                    mount-name: '513250002'
+                    link-id: 'h1.c3.h4.c5'                
+                top-level-equipment-uuid-provided:
+                  value:
+                    mount-name: '513250010'
+                    link-id: 'h1.c2.h3.c4'
+                    top-level-equipment-uuid: '2-LIM 8xEth'
+      responses:
+        '200':
+          description: 'LTPs for accessport provided.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access-port-to-ltp-mappings:
+                    type: array
+                    properties:
+                      uuid:
+                        type: string
+                        description: >
+                          'Identifier of the ltp
+                          from (for first array item == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.request.body#uuid},
+                          for subsequent array items == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
+                      client-ltps:
+                        type: array
+                        items:
+                          type: string
+                        description: >
+                          'List of client-ltps
+                          from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
+                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
+                      server-ltps:
+                        type: array
+                        items:
+                          type: string
+                        description: >
+                          'List of server-ltps
+                          from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
+                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'                     
+                      layer-protocol-names:
+                        type: array
+                        items:
+                          type: string
+                        description: >
+                          'List of layer-protocol-names from
+                          from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name}
+                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
+                example:
+                  access-port-to-ltp-mappings:
+                    - uuid: '2-LIM 8xEth'
+                      client-ltps: []
+                      server-ltps: 
+                        - 'LTP-ETY-TTP-2_LAN-4-RJ45'
+                      layer-protocol-names: 
+                        - 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+                    - uuid: 'LTP-ETY-TTP-2_LAN-4-RJ45'
+                      client-ltps: 
+                        - 'LTP-ETY-TTP-2_LAN-5-RJ12'
+                      server-ltps: []
+                      layer-protocol-names: 
+                        - 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+          headers:
+            x-correlator:
+              schema:
+                type: string
+                example: '550e8400-e29b-11d4-a716-446655440000'
+              description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+            exec-time:
+              schema:
+                type: integer
+                example: 1100
+              description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+            backend-time:
+              schema:
+                type: integer
+                example: 850
+              description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                  'Life cycle state of the consumed service
+                  find in [/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-s-is-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        default:
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+      callbacks:
+        RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData:
+          ReadingUuidsOfTopLevelEquipment: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'top-level-element'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-000/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'Top-level-equipment provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:control-construct:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                top-level-equipment:
+                                  type: array
+                                  items:
+                                    type: string
+                        example:
+                          core-model-1-4:control-construct:
+                            - top-level-equipment:
+                              - '2-LIM 8xEth'
+                              - '3-RIM 2xRadio'
+                              - '1-Core'
+                              - '4-RIM 1xEth 10Gb'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+          ReadingEquipmentDataOfTopLevelElement: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: uuid
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '2-LIM 8xEth'
+                  description: >
+                    'The uuid of the top-level-equipment
+                    from {$request.body#top-level-equipment-uuid} if provided as input parameter and if this uuid included in {$ReadingUuidsOfTopLevelEquipment.response#core-model-1-4:control-construct/top-level-equipment}
+                    or if size of ({$ReadingUuidsOfTopLevelEquipment.response#core-model-1-4:control-construct/top-level-equipment})==1, then uuid = first element from {$ReadingUuidsOfTopLevelEquipment.response#core-model-1-4:control-construct/top-level-equipment}'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'contained-holder(occupying-fru);connector(local-id)'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-001/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'Contained-holder and connector provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:equipment:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                connector:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      local-id:
+                                        type: string
+                                contained-holder:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      local-id:
+                                        type: string
+                                      occupying-fru:
+                                        type: string
+                        example:
+                          core-model-1-4:equipment:
+                            - uuid: '2-LIM 8xEth'                                  
+                              connector:
+                                - local-id: 'LAN-4-RJ45-Connector'
+                              contained-holder:
+                                - local-id: '2_LAN-7 SFP'
+                                  occupying-fru: '2_LAN-7 SFP'
+                                - local-id: '2_LAN-8 SFP'
+                                  occupying-fru: '2_LAN-8 SFP'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+          ReadingEquipmentDataInHolder: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: uuid
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '2-LIM 8xEth'
+                  description: >
+                    'The uuid of the next equipment to be retrieved.
+                    from: 
+                    with sequenceId = iterate over {$requestBody#string-of-concatenated-sequence-ids},
+                         and sequence-id of contained-holder and connector = position in the respective arrays
+
+                      TODO
+
+                      if (sequenceId==h*), 
+                       then uuid={$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
+                       of the holder instance with holder.sequence-id == sequenceId
+                      else if letter infront of sequenceId==c,
+                        then uuid = equipmentUuid = {$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/uuid}
+                        and connectorLocalId = local-id of instance of connector with sequence-id == sequenceId'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'contained-holder(occupying-fru);connector(local-id)'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-002/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'Contained-holder and connector provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:equipment:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                connector:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      local-id:
+                                        type: string
+                                contained-holder:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      local-id:
+                                        type: string
+                                      occupying-fru:
+                                        type: string
+                        example:
+                          core-model-1-4:equipment:
+                            - uuid: '2-LIM 8xEth'                                  
+                              connector:
+                                - local-id: 'LAN-4-RJ45-Connector'
+                              contained-holder:
+                                - local-id: '2_LAN-7 SFP'
+                                  occupying-fru: '2_LAN-7 SFP'
+                                - local-id: '2_LAN-8 SFP'
+                                  occupying-fru: '2_LAN-8 SFP'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+
+          ReadingAugmentOfAllLtps: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-003/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'LTP augment provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:control-construct:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                logical-termination-point:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                      ltp-augment-1-0:ltp-augment-pac:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            connector:
+                                              type: string
+                                            equipment:
+                                              type: array
+                                              items:
+                                                type: string  
+                        example:
+                          core-model-1-4:control-construct:
+                            - logical-termination-point:
+                                - uuid: 'LTP-ETY-TTP-2_LAN-3-RJ45'
+                                  ltp-augment-1-0:ltp-augment-pac:
+                                    connector: 'LAN-3-RJ45-Connector'
+                                    equipment:
+                                      - '2-LIM 8xEth'
+                                - uuid: 'LTP-ETY-TTP-2_LAN-4-RJ45'
+                                  ltp-augment-1-0:ltp-augment-pac:
+                                    connector: ''
+                                    equipment:
+                                      - '2-LIM 8xEth'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+
+
+          ReadingServingLtp: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: uuid
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: 'TODO'
+                  description: >
+                    'Identifier of the logical-termination-point
+                    from TODO
+                    s. diagram: LowestLtp == ltpUuid for equipment==equipmentUuid AND connector==connectorLocalId'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'server-ltp;client-ltp;layer-protocol(layer-protocol-name)'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-004/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'ServingLTP information provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:control-construct:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                logical-termination-point:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                      client-ltp:
+                                        type: array
+                                        items:
+                                          type: string
+                                      server-ltp:
+                                        type: array
+                                        items:
+                                          type: string
+                                      layer-protocol:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            local-id:
+                                              type: string
+                                            layer-protocol-name:
+                                              type: string
+                        example:
+                          core-model-1-4:control-construct:
+                            - logical-termination-point:
+                                - uuid: 'LTP-MWS-2_LAN-4-RJ45'
+                                  client-ltp:
+                                    - 'LTP-ETC-TTP-2_LAN-4-RJ45'
+                                  server-ltp:
+                                    - 'LTP-ETY-TTP-2_LAN-4-RJ45'
+                                  layer-protocol:
+                                    - local-id: 'LP-MWS-2_LAN-4-RJ45'
+                                      layer-protocol-name: 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+
+
+          ReadingClientLtp: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            get:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mount-name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: >
+                    'The mount-name of the device that is addressed by this callback
+                    from {$request.body#mount-name}'
+                - name: uuid
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: 'TODO'
+                  description: >
+                    'Identifier of the logical-termination-point
+                    from TODO
+                    s. diagram: 
+                    repeat for first uuid from [clientLtps]:
+                        for first iteration [clientLtps] = ReadingServingLtp.[clientLtps],
+                        for subsequent iterations [clientLtps] = child-[clientLtps]'
+                - name: fields
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+                    example: 'server-ltp;client-ltp;layer-protocol(layer-protocol-name)'
+                  description: >
+                    'If different from empty string, a fields filter with the following value to be added to the request
+                    from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-005/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
+              responses:
+                '200':
+                  description: 'ServingLTP information provided from cache'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          core-model-1-4:control-construct:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                logical-termination-point:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                      client-ltp:
+                                        type: array
+                                        items:
+                                          type: string
+                                      server-ltp:
+                                        type: array
+                                        items:
+                                          type: string
+                                      layer-protocol:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            local-id:
+                                              type: string
+                                            layer-protocol-name:
+                                              type: string
+                        example:
+                          core-model-1-4:control-construct:
+                            - logical-termination-point:
+                                - uuid: 'LTP-MWS-2_LAN-4-RJ45'
+                                  client-ltp:
+                                    - 'LTP-ETC-TTP-2_LAN-4-RJ45'
+                                  server-ltp:
+                                    - 'LTP-ETY-TTP-2_LAN-4-RJ45'
+                                  layer-protocol:
+                                    - local-id: 'LP-MWS-2_LAN-4-RJ45'
+                                      layer-protocol-name: 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
+
+########################################################################################################################
+#   Common Components
+########################################################################################################################
+components:
+  parameters:
+    user:
+      name: user
+      in: header
+      required: true
+      schema:
+        type: string
+        example: 'User Name'
+      description: 'User identifier from the system starting the service call'
+    originator:
+      name: originator
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 3
+        example: 'Resolver'
+      description: >
+        'Identification for the system consuming the API, as defined in
+         [/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+    x-correlator:
+      name: x-correlator
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+        description: 'Empty string accepted from external applications.'
+        example: '550e8400-e29b-11d4-a716-446655440000'
+      description: 'UUID for the service execution flow that allows to correlate requests and responses'
+    trace-indicator:
+      name: trace-indicator
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^([0-9]+)(\.([0-9]+))*$'
+        description: 'Empty string accepted from external applications.'
+        example: '1.3.1'
+      description: 'Sequence of request numbers along the flow'
+    customer-journey:
+      name: customer-journey
+      in: header
+      required: true
+      schema:
+        type: string
+        example: 'Unknown value'
+      description: 'Holds information supporting customer’s journey to which the execution applies'
+  responses:
+    responseForErroredServiceRequests:
+      description: 'Response in case of errored service requests'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorDescription'
+      headers:
+        x-correlator:
+          schema:
+            type: string
+            pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+            example: '550e8400-e29b-11d4-a716-446655440000'
+          description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+        exec-time:
+          schema:
+            type: integer
+            example: 1100
+          description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+        backend-time:
+          schema:
+            type: integer
+            example: 850
+          description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+    responseForErroredOamRequests:
+      description: 'Response in case of errored OaM requests'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorDescription'
+  schemas:
+    errorDescription:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: operation-key
+    basicAuth:
+      type: http
+      scheme: basic

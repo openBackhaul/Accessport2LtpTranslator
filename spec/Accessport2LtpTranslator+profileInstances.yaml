@@ -119,14 +119,14 @@ profile-instances:
     capability:
       string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement'
     configuration:
-      string-value: 'contained-holder(occupying-fru);connector(local-id)'
+      string-value: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
 
   - profile-name: 'StringProfile'
     uuid: 'a2lt-1-0-0-string-p-002'
     capability:
       string-name: 'RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataInHolder'
     configuration:
-      string-value: 'contained-holder(occupying-fru);connector(local-id)'
+      string-value: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
 
   - profile-name: 'StringProfile'
     uuid: 'a2lt-1-0-0-string-p-003'

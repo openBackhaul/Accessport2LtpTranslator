@@ -266,7 +266,7 @@ clients:
           # fields filter: ?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
             uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-000
-          # fields filter: ?fields=contained-holder(occupying-fru);connector(local-id)
+          # fields filter: ?fields=contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}
             uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-001
           # fields filter: ?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)           
