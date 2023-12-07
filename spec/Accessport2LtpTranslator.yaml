@@ -432,9 +432,15 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
 
   /v1/translate-equipment-sequence-ids-to-ltp-uuids:
+    parameters:
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'  
     post:
-      operationId: provideAcceptanceDataOfLinkEndpoint
-      summary: 'Provides the data required for the acceptance of a device'
+      operationId: provideEquipmentSequenceIdToLtpUuidsTranslation
+      summary: 'Provides the translation of equipment sequence ids to ltp uuids.'
       tags:
         - IndividualServices
       security:
@@ -457,12 +463,12 @@ paths:
                   description: 'Concatenated sequence Ids of holders and connectors'
                 top-level-equipment-uuid:
                   type: string
-                  description: 'Uuid of the top-level-equipment. Optional parameter, which is only needed when there are multiple top level equipments.'
+                  description: 'Uuid of the top-level-equipment. Optional parameter, which is only needed when device contains multiple top level equipments.'
             examples:
                 top-level-equipment-uuid-not-provided:
                   value:
                     mount-name: '513250002'
-                    link-id: 'h1.c3.h4.c5'                
+                    link-id: 'h1.c3.h4.c1'                
                 top-level-equipment-uuid-provided:
                   value:
                     mount-name: '513250010'
@@ -470,7 +476,7 @@ paths:
                     top-level-equipment-uuid: '2-LIM 8xEth'
       responses:
         '200':
-          description: 'LTPs for accessport provided.'
+          description: 'Layered LTP mappings for access port provided.'
           content:
             application/json:
               schema:
@@ -482,43 +488,73 @@ paths:
                       uuid:
                         type: string
                         description: >
-                          'Identifier of the ltp.
-                          from {todo-callback-info}
+                          'Identifier of the ltp
+                          from (for first access-port-to-ltp-mappings array item == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.request.body#uuid},
+                          for subsequent access-port-to-ltp-mappings array items == subsequent {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
                       client-ltps:
                         type: array
                         items:
                           type: string
                         description: >
                           'List of client-ltps
-                          from {TODO-callback}'
+                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
+                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
                       server-ltps:
                         type: array
                         items:
                           type: string
                         description: >
                           'List of server-ltps
-                          from {TODO-callback}'                      
+                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
+                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'                     
                       layer-protocol-names:
                         type: array
                         items:
                           type: string
                         description: >
                           'List of layer-protocol-names from
-                          from {TODO-callback}'
+                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name}
+                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
                 example:
                   access-port-to-ltp-mappings:
-                    - uuid: '2-LIM 8xEth'
-                      client-ltps: []
-                      server-ltps: 
-                        - 'LTP-ETY-TTP-2_LAN-4-RJ45'
-                      layer-protocol-names: 
-                        - 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
-                    - uuid: '1-Core'
-                      client-ltps: 
-                        - 'LTP-ETY-TTP-2_LAN-5-RJ12'
+                    - uuid: 'ETY-2134639620'
+                      client-ltps:
+                       - 'PES-21346039620'
                       server-ltps: []
                       layer-protocol-names: 
-                        - 'pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+                        - 'wire-interface-2-0:LAYER_PROTOCOL_NAME_TYPE_WIRE_LAYER'
+                        - '...'
+                    - uuid: 'PES-2134639620'
+                      client-ltps:
+                        - 'ETH-2134639620'
+                      server-ltps: 
+                        - 'ETY-2134639620'
+                      layer-protocol-names: 
+                        - 'ppure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
+                        - '...'
+                    - uuid: 'ETH-2134639620'
+                      client-ltps:
+                      - 'MAC-2134639620'
+                      server-ltps: 
+                        - 'PES-2134639620'
+                      layer-protocol-names: 
+                        - 'ethernet-container-2-0:LAYER_PROTOCOL_NAME_TYPE_ETHERNET_CONTAINER_LAYER'
+                        - '...'
+                    - uuid: 'MAC-2134639620'
+                      client-ltps:
+                        - 'VI-4'
+                      server-ltps: 
+                        - 'ETH-2134639620'
+                      layer-protocol-names: 
+                        - 'mac-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_MAC_LAYER'
+                        - '...'
+                    - uuid: 'VI-4'
+                      client-ltps: []
+                      server-ltps: 
+                        - 'MAC-2134639620'
+                      layer-protocol-names: 
+                        - 'vlan-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_VLAN_LAYER'
+                        - '...'
           headers:
             x-correlator:
               schema:
@@ -653,7 +689,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
           ReadingEquipmentDataOfTopLevelElement: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             get:
               parameters:
@@ -678,9 +713,12 @@ paths:
                     type: string
                     example: '2-LIM 8xEth'
                   description: >
-                    'The uuid of the top-level-equipment
-                    from {$request.body#top-level-equipment-uuid} if provided as input parameter and if this uuid included in {$ReadingUuidsOfTopLevelEquipment.response#core-model-1-4:control-construct/top-level-equipment}
-                    or if size of ({$ReadingUuidsOfTopLevelEquipment.response#core-model-1-4:control-construct/top-level-equipment})==1, then uuid = first element from that list
+                    'The uuid of the top-level-equipment that is addressed by this callback
+                    If {$request.body#top-level-equipment-uuid} has been provided in the requestBody and if {$request.body#top-level-equipment-uuid} is included in {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment.response.body#core-model-1-4:control-construct/top-level-equipment}
+                    then uuid = {$request.body#top-level-equipment-uuid}
+                    else if {$request.body#top-level-equipment-uuid} has NOT been provided and size of ({$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment.response.body#core-model-1-4:control-construct/top-level-equipment})==1
+                    then uuid = first element from {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment.response.body#core-model-1-4:control-construct/top-level-equipment}
+                    (else: error case)'
                 - name: fields
                   in: query
                   required: true
@@ -692,7 +730,7 @@ paths:
                     from [/core-model-1-4:control-construct/profile-collection/profile=a2lt-1-0-0-string-p-001/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
               responses:
                 '200':
-                  description: 'Contained-holder and connector provided from cache'
+                  description: 'Contained-holder and connector information provided from cache'
                   content:
                     application/json:
                       schema:
@@ -712,6 +750,8 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -721,16 +761,21 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'                                  
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
+                                  sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
+                                  sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
+                                  sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
@@ -771,7 +816,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
           ReadingEquipmentDataInHolder: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             get:
               parameters:
@@ -796,14 +840,17 @@ paths:
                     type: string
                     example: '2-LIM 8xEth'
                   description: >
-                    'The uuid of the top-level-equipment
-                    from: with sequenceId = iterate over {$requestBody#string-of-concatenated-sequence-ids}, 
-                      if letter in front of sequenceId==h, 
-                       then uuid={$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
-                       of the holder instance with holder.sequence-id == sequenceId
-                      else if letter infront of sequenceId==c,
-                        then uuid = equipmentUuid = {$<TODO-callbackname>.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/uuid}
-                        and connectorLocalId = local-id of instance of connector with sequence-id == sequenceId'
+                    'The uuid of the next equipment to be retrieved.
+                    Iterate over {$request.body#string-of-concatenated-sequence-ids}, with sequenceId = current item:
+                    If (sequenceId==h*) 
+                      then: uuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
+                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder.sequence-id}==sequenceId
+                    else if (sequenceId==c*)
+                      then: 
+                        uuid = equipmentUuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/uuid},
+                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.local-id}
+                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.sequence-id}==sequenceId
+                        (equipmentUuid, connectorLocalId)-pair is to be stored temporarily in memory
                 - name: fields
                   in: query
                   required: true
@@ -835,6 +882,8 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -844,16 +893,21 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
+                                      sequence-id:
+                                        type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'                                  
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
+                                  sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
+                                  sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
+                                  sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
@@ -894,8 +948,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
-
           ReadingAugmentOfAllLtps: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             get:
               parameters:
@@ -1006,9 +1058,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
-
-
           ReadingServingLtp: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             get:
               parameters:
@@ -1031,11 +1080,14 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'TODO'
+                    example: 'LTP-ETY-TTP-2_LAN-4-RJ45'
                   description: >
                     'Identifier of the logical-termination-point
-                    from TODO
-                    s. diagram: LowestLtp == ltpUuid for equipment==equipmentUuid AND connector==connectorLocalId'
+                    uuid = lowestLtp = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/uuid}
+                       where pair of 
+                        (first item from {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/ltp-augment-1-0:ltp-augment-pac/equipment},
+                         {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/ltp-augment-1-0:ltp-augment-pac/connector})
+                       == found (equipmentUuid, connectorLocalId)-pair in memory (from ReadingEquipmentDataInHolder) 
                 - name: fields
                   in: query
                   required: true
@@ -1133,9 +1185,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
-
-
           ReadingClientLtp: #[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-tcp-c-mwdi-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=a2lt-1-0-0-op-c-is-mwdi-1-1-1-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             get:
               parameters:
@@ -1158,14 +1207,13 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'TODO'
+                    example: 'LTP-ETY-TTP-2_LAN-4-RJ45'
                   description: >
                     'Identifier of the logical-termination-point
-                    from TODO
-                    s. diagram: 
-                    repeat for first uuid from [clientLtps]:
-                        for first iteration [clientLtps] = ReadingServingLtp.[clientLtps],
-                        for subsequent iterations [clientLtps] = child-[clientLtps]'
+                     Repeat recursively for first uuid from [clientLtps], with:
+                     for first iteration: uuid = first item from {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp},
+                     for subsequent iterions: uuid = first item from {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
+                       from previous ReadingClientLtp call'
                 - name: fields
                   in: query
                   required: true
@@ -1263,7 +1311,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
 
 
 ########################################################################################################################
