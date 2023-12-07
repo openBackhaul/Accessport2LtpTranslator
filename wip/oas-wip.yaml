@@ -36,7 +36,7 @@ paths:
                 top-level-equipment-uuid-not-provided:
                   value:
                     mount-name: '513250002'
-                    link-id: 'h1.c3.h4.c5'                
+                    link-id: 'h1.c3.h4.c1'                
                 top-level-equipment-uuid-provided:
                   value:
                     mount-name: '513250010'
@@ -44,7 +44,7 @@ paths:
                     top-level-equipment-uuid: '2-LIM 8xEth'
       responses:
         '200':
-          description: 'LTPs for accessport provided.'
+          description: 'Layered LTP mappings for access port provided.'
           content:
             application/json:
               schema:
@@ -58,7 +58,7 @@ paths:
                         description: >
                           'Identifier of the ltp
                           from (for first array item == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.request.body#uuid},
-                          for subsequent array items == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
+                          for subsequent array items == subsequent {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
                       client-ltps:
                         type: array
                         items:
@@ -66,7 +66,7 @@ paths:
                         description: >
                           'List of client-ltps
                           from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
-                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
+                          for subsequent array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
                       server-ltps:
                         type: array
                         items:
@@ -74,7 +74,7 @@ paths:
                         description: >
                           'List of server-ltps
                           from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
-                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'                     
+                          for subsequent array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'                     
                       layer-protocol-names:
                         type: array
                         items:
@@ -82,7 +82,7 @@ paths:
                         description: >
                           'List of layer-protocol-names from
                           from (for first array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name}
-                          for subsequent array items == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
+                          for subsequent array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
                 example:
                   access-port-to-ltp-mappings:
                     - uuid: '2-LIM 8xEth'
