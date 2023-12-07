@@ -437,7 +437,7 @@ paths:
       - $ref: '#/components/parameters/originator'
       - $ref: '#/components/parameters/x-correlator'
       - $ref: '#/components/parameters/trace-indicator'
-      - $ref: '#/components/parameters/customer-journey'  
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideEquipmentSequenceIdToLtpUuidsTranslation
       summary: 'Provides the translation of equipment sequence ids to ltp uuids.'
@@ -465,15 +465,15 @@ paths:
                   type: string
                   description: 'Uuid of the top-level-equipment. Optional parameter, which is only needed when device contains multiple top level equipments.'
             examples:
-                top-level-equipment-uuid-not-provided:
-                  value:
-                    mount-name: '513250002'
-                    link-id: 'h1.c3.h4.c1'                
-                top-level-equipment-uuid-provided:
-                  value:
-                    mount-name: '513250010'
-                    link-id: 'h1.c2.h3.c4'
-                    top-level-equipment-uuid: '2-LIM 8xEth'
+              top-level-equipment-uuid-not-provided:
+                value:
+                  mount-name: '513250002'
+                  link-id: 'h1.c3.h4.c1'
+              top-level-equipment-uuid-provided:
+                value:
+                  mount-name: '513250010'
+                  link-id: 'h1.c2.h3.c4'
+                  top-level-equipment-uuid: '2-LIM 8xEth'
       responses:
         '200':
           description: 'Layered LTP mappings for access port provided.'
@@ -506,7 +506,7 @@ paths:
                         description: >
                           'List of server-ltps
                           from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
-                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'                     
+                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'
                       layer-protocol-names:
                         type: array
                         items:
@@ -519,9 +519,9 @@ paths:
                   access-port-to-ltp-mappings:
                     - uuid: 'ETY-2134639620'
                       client-ltps:
-                       - 'PES-21346039620'
+                        - 'PES-21346039620'
                       server-ltps: []
-                      layer-protocol-names: 
+                      layer-protocol-names:
                         - 'wire-interface-2-0:LAYER_PROTOCOL_NAME_TYPE_WIRE_LAYER'
                         - '...'
                     - uuid: 'PES-2134639620'
@@ -529,15 +529,15 @@ paths:
                         - 'ETH-2134639620'
                       server-ltps: 
                         - 'ETY-2134639620'
-                      layer-protocol-names: 
+                      layer-protocol-names:
                         - 'ppure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
                         - '...'
                     - uuid: 'ETH-2134639620'
                       client-ltps:
-                      - 'MAC-2134639620'
+                        - 'MAC-2134639620'
                       server-ltps: 
                         - 'PES-2134639620'
-                      layer-protocol-names: 
+                      layer-protocol-names:
                         - 'ethernet-container-2-0:LAYER_PROTOCOL_NAME_TYPE_ETHERNET_CONTAINER_LAYER'
                         - '...'
                     - uuid: 'MAC-2134639620'
@@ -545,14 +545,14 @@ paths:
                         - 'VI-4'
                       server-ltps: 
                         - 'ETH-2134639620'
-                      layer-protocol-names: 
+                      layer-protocol-names:
                         - 'mac-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_MAC_LAYER'
                         - '...'
                     - uuid: 'VI-4'
                       client-ltps: []
                       server-ltps: 
                         - 'MAC-2134639620'
-                      layer-protocol-names: 
+                      layer-protocol-names:
                         - 'vlan-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_VLAN_LAYER'
                         - '...'
           headers:
@@ -765,7 +765,7 @@ paths:
                                         type: integer
                         example:
                           core-model-1-4:equipment:
-                            - uuid: '2-LIM 8xEth'                                  
+                            - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
                                   sequence-id: 1
@@ -897,7 +897,7 @@ paths:
                                         type: integer
                         example:
                           core-model-1-4:equipment:
-                            - uuid: '2-LIM 8xEth'                                  
+                            - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
                                   sequence-id: 1
