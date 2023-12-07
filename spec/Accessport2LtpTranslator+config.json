@@ -223,7 +223,7 @@
               "string-name": "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement"
             },
             "string-profile-configuration": {
-              "string-value": "contained-holder;connector"
+              "string-value": "contained-holder(occupying-fru);connector(local-id)"
             }
           }
         },
@@ -235,7 +235,7 @@
               "string-name": "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataInHolder"
             },
             "string-profile-configuration": {
-              "string-value": "contained-holder;connector"
+              "string-value": "contained-holder(occupying-fru);connector(local-id)"
             }
           }
         },
