@@ -527,7 +527,7 @@ paths:
                     - uuid: 'PES-2134639620'
                       client-ltps:
                         - 'ETH-2134639620'
-                      server-ltps: 
+                      server-ltps:
                         - 'ETY-2134639620'
                       layer-protocol-names:
                         - 'ppure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER'
@@ -535,7 +535,7 @@ paths:
                     - uuid: 'ETH-2134639620'
                       client-ltps:
                         - 'MAC-2134639620'
-                      server-ltps: 
+                      server-ltps:
                         - 'PES-2134639620'
                       layer-protocol-names:
                         - 'ethernet-container-2-0:LAYER_PROTOCOL_NAME_TYPE_ETHERNET_CONTAINER_LAYER'
@@ -543,14 +543,14 @@ paths:
                     - uuid: 'MAC-2134639620'
                       client-ltps:
                         - 'VI-4'
-                      server-ltps: 
+                      server-ltps:
                         - 'ETH-2134639620'
                       layer-protocol-names:
                         - 'mac-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_MAC_LAYER'
                         - '...'
                     - uuid: 'VI-4'
                       client-ltps: []
-                      server-ltps: 
+                      server-ltps:
                         - 'MAC-2134639620'
                       layer-protocol-names:
                         - 'vlan-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_VLAN_LAYER'
@@ -645,10 +645,10 @@ paths:
                         example:
                           core-model-1-4:control-construct:
                             - top-level-equipment:
-                              - '2-LIM 8xEth'
-                              - '3-RIM 2xRadio'
-                              - '1-Core'
-                              - '4-RIM 1xEth 10Gb'
+                                - '2-LIM 8xEth'
+                                - '3-RIM 2xRadio'
+                                - '1-Core'
+                                - '4-RIM 1xEth 10Gb'
                   headers:
                     x-correlator:
                       schema:
@@ -842,11 +842,11 @@ paths:
                   description: >
                     'The uuid of the next equipment to be retrieved.
                     Iterate over {$request.body#string-of-concatenated-sequence-ids}, with sequenceId = current item:
-                    If (sequenceId==h*) 
+                    If (sequenceId==h*)
                       then: uuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
                       where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder.sequence-id}==sequenceId
                     else if (sequenceId==c*)
-                      then: 
+                      then:
                         uuid = equipmentUuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/uuid},
                         connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.local-id}
                           where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.sequence-id}==sequenceId
@@ -1004,7 +1004,7 @@ paths:
                                             equipment:
                                               type: array
                                               items:
-                                                type: string  
+                                                type: string
                         example:
                           core-model-1-4:control-construct:
                             - logical-termination-point:
@@ -1084,10 +1084,10 @@ paths:
                   description: >
                     'Identifier of the logical-termination-point
                     uuid = lowestLtp = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/uuid}
-                       where pair of 
+                       where pair of
                         (first item from {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/ltp-augment-1-0:ltp-augment-pac/equipment},
                          {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps.response.body#core-model-1-4:control-construct/logical-termination-point/ltp-augment-1-0:ltp-augment-pac/connector})
-                       == found (equipmentUuid, connectorLocalId)-pair in memory (from ReadingEquipmentDataInHolder) 
+                       == found (equipmentUuid, connectorLocalId)-pair in memory (from ReadingEquipmentDataInHolder)
                 - name: fields
                   in: query
                   required: true
