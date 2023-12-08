@@ -49,7 +49,7 @@ group Repeat for each sequenceId in stringOfConcatenatedSequenceIds
       THEN nextUuid = containedHolder.occupying-fru of holder instance with containedHolder.sequence-id == sequenceId
 
     IF (sequenceId == c*)
-      THEN 
+      THEN
         equipmentUuid = nextUuid
         connectorLocalId = connector.local-id connector instance with connector.sequence-id == sequenceId
         <i>(store this equipmentUuid, connectorLocalId pair in memory)</i>
@@ -67,11 +67,11 @@ offeredService -> ltpList : {mountName}
 ltpList --> offeredService : {list of(ltpUuid, [equipment], connector)}
 
 note over offeredService
-  WITH rEquip = (ReadingEquipmentDataInHolder pair info from memory) 
+  WITH rEquip = (ReadingEquipmentDataInHolder pair info from memory)
        and rAug = (ReadingAugmentOfAllLtps.response.body)
 
   WITH LowestLtp == rAug.ltpUuid
-  WHERE 1st entry from rAug.equipment==rEquip.equipmentUuid 
+  WHERE 1st entry from rAug.equipment==rEquip.equipmentUuid
         AND rAug.connector==rEquip.connectorLocalId
     <u> ReadingServingLtp </u>
 end note

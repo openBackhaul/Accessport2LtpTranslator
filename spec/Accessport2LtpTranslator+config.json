@@ -1773,7 +1773,7 @@
             }
           }
         ]
-      }, 
+      },
       {
         "uuid": "a2lt-1-0-0-http-c-mwdi-1-1-1-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
