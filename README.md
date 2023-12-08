@@ -22,7 +22,7 @@ The data is retrieved from the MicrowaveDeviceInventory from cache.
 
 ## Potential format of the response.
 
-```json
+```
 
 {access-port-to-ltp-mappings:
   [
