@@ -9,7 +9,7 @@ The Accessport2LtpTranslator is part of the HighPerformanceNetworkInterface.
 
 ## Description
 
-The Accessport2LtpTranslator is supporting for instance the Resolver in creating a valid RESTCONF URI.
+The Accessport2LtpTranslator is supporting for instance the Resolver in creating a valid RESTCONF URI.  
 In order to compare planning data and system settings as well as performance data, it should be possible to establish standardised relationships between the SDN models and current planning tools.
 Therefore the attribute sequenceID should be used.
 Each object (connector and contained-holder) beneath an common equipment object should have a unique sequenceId.
@@ -19,26 +19,48 @@ The input parameters should be handed over via request body.
 The data is retrieved from the MicrowaveDeviceInventory from cache.
 
 - Concrete translation results are provided on individual service requests.
-- Potential format of the response
-  ````
-  {
-    [
-      {
-        "uuid": "“ETY-2134639620“",
-        "client-ltp": "“PES-2134639620“",
-        "server-ltp": null,
-        "layer-protocol-name": "„wire-interface-2-0…“"
-      },
-      {
-        "uuid": "“PES-2134639620“",
-        "client-ltp": "“ETC-2134639620“",
-        "server-ltp": ETY-2134639620,
-        "layer-protocol-name": "„pure-ethenet-structur-2-0…“"
-      },
 
-    ]
-  }
-  ````
+## Potential format of the response.
+
+```json
+
+{access-port-to-ltp-mappings:
+  [
+    {
+      uuid: "ETY-2134639620",
+      client-ltp: ["PES-21346039620"],
+      server-ltp: [],
+      layer-protocol-name : ["wire-interface-2-0…",…]
+    },
+    {
+      uuid: "PES-2134639620",
+      client-ltp: ["ETH-2134639620"],
+      server-ltp: ["ETY-2134639620"],
+      layer-protocol-name: ["pure-ethernet-structure-2-0:…",…]
+    }
+    {
+      uuid:"ETH-2134639620",
+      client-ltp:["MAC-2134639620"],
+      server-ltp: ["PES-2134639620"],
+      layer-protocol-name : ["ethernet-container-2-0…",…]
+    },
+    {
+      uuid:"MAC-2134639620",
+      client-ltp:["VI-4"],
+      server-ltp: ["ETH-2134639620"],
+      layer-protocol-name: ["mac-interface-1-0:…",…]
+    },
+    {
+      uuid: "VI-4",
+      client-ltp: [],
+      server-ltp: ["MAC-2134639620"],
+      layer-protocol-name: ["vlan-interface-1-0:…",…]
+    },
+  ]
+}
+
+```
+
 
 ## Relevance
 
