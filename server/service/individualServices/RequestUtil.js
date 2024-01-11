@@ -16,7 +16,7 @@ exports.getAppInformation = async function() {
             appInformation = await BasicServices.informAboutApplication();
         } catch (exception) {
             logger.error(exception, "no application information found, using fallback");
-            appInformation["application-name"] = "MultiDomainInventoryProxy";
+            appInformation["application-name"] = "Accessport2LtpTranslator";
             appInformation["release-number"] = "1.0.0";
         }
     }
@@ -25,7 +25,7 @@ exports.getAppInformation = async function() {
 }
 
 exports.createRequestHeader = function (operationKey) {
-    return new RequestHeader("MultiDomainInventoryProxy", "MultiDomainInventoryProxy", undefined, "1", undefined, operationKey);
+    return new RequestHeader("Accessport2LtpTranslator", "Accessport2LtpTranslator", undefined, "1", undefined, operationKey);
 }
 
 exports.buildControllerTargetPath = function (controllerProtocol, controllerAddress, controllerPort) {
