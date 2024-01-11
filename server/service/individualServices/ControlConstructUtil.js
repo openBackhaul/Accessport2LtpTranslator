@@ -8,6 +8,8 @@ const logger = require('../LoggingService.js').getLogger();
 const FcPort = require("onf-core-model-ap/applicationPattern/onfModel/models/FcPort");
 const controlConstruct = require("onf-core-model-ap/applicationPattern/onfModel/models/ControlConstruct");
 const tcpClientInterface = require("onf-core-model-ap/applicationPattern/onfModel/models/layerProtocols/TcpClientInterface");
+const profileCollection = require('onf-core-model-ap/applicationPattern/onfModel/models/ProfileCollection');
+const profile = require('onf-core-model-ap/applicationPattern/onfModel/models/Profile');
 
 /**
  * Deletes all fcPorts (for client LTPs) for application with httpClientUUID. Application LTP must be deleted after this
@@ -221,9 +223,31 @@ async function getFirstHttpLTPByApplicationName(applicationName) {
     return null;
 }
 
+async function getProfileStringValueByName(searchedStringValueName) {
+    let stringValue = undefined;
+    try {
+        let stringProfileInstanceList = await profileCollection.getProfileListForProfileNameAsync(profile.profileNameEnum.STRING_PROFILE);
+
+        for (const stringProfileInstance of stringProfileInstanceList) {
+            let stringProfilePac = stringProfileInstance[onfAttributes.STRING_PROFILE.PAC];
+            let stringProfileCapability = stringProfilePac[onfAttributes.STRING_PROFILE.CAPABILITY];
+            let stringName = stringProfileCapability[onfAttributes.STRING_PROFILE.STRING_NAME];
+            if (stringName === searchedStringValueName) {
+                let stringProfileConfiguration = stringProfilePac[onfAttributes.STRING_PROFILE.CONFIGURATION];
+                stringValue = stringProfileConfiguration[onfAttributes.STRING_PROFILE.STRING_VALUE];
+                break;
+            }
+        }
+    } catch (error) {
+        logger.error(error, "error during search for string profile in config with name '" + searchedStringValueName + "'");
+    }
+    return stringValue;
+}
+
 module.exports = {
     deleteAllFcPortsForApplication,
     getLogicalTerminationPointsAsync,
     getForwardingConstructOutputOperationData,
-    getHttpAndTcpUUIDForNewRelease
+    getHttpAndTcpUUIDForNewRelease,
+    getProfileStringValueByName
 }
