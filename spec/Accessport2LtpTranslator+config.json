@@ -1783,7 +1783,7 @@
           "a2lt-1-0-0-op-c-is-mwdi-1-1-1-002"
         ],
         "server-ltp": [
-            "a2lt-1-0-0-tcp-c-mwdi-1-1-1-000"
+          "a2lt-1-0-0-tcp-c-mwdi-1-1-1-000"
         ],
         "layer-protocol": [
           {
@@ -1802,7 +1802,7 @@
         "uuid": "a2lt-1-0-0-tcp-c-mwdi-1-1-1-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-            "a2lt-1-0-0-http-c-mwdi-1-1-1-000"
+          "a2lt-1-0-0-http-c-mwdi-1-1-1-000"
         ],
         "server-ltp": [
         ],
@@ -2223,7 +2223,7 @@
                 "logical-termination-point": "a2lt-1-0-0-op-c-bm-alt-2-0-1-001"
               }
             ]
-      },
+          },
           {
             "uuid": "a2lt-1-0-0-op-fc-bm-007",
             "name": [
