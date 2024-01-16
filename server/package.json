@@ -20,6 +20,7 @@
     "oas3-tools": "^2.2.3",
     "onf-core-model-ap": "2.0.2-alpha.2",
     "onf-core-model-ap-bs": "2.0.2-alpha.2",
+    "http-errors": "2.0.0",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0"
   },
