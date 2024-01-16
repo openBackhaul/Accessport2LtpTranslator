@@ -1,9 +1,9 @@
 'use strict';
 
-var oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var ActionProfile = require('../service/ActionProfileService');
+const oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const ActionProfile = require('../service/ActionProfileService');
 
 module.exports.getActionProfileConsequentOperationReference = function getActionProfileConsequentOperationReference(req, res, next, uuid) {
   ActionProfile.getActionProfileConsequentOperationReference(req.url)

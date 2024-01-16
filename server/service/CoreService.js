@@ -7,14 +7,11 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  *
  **/
 exports.getControlConstruct = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync("core-model-1-4:control-construct");
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync("core-model-1-4:control-construct");
+
+  return {
     "core-model-1-4:control-construct": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -23,12 +20,9 @@ exports.getControlConstruct = async function (url) {
  * url String
  **/
 exports.getProfileInstance = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "core-model-1-4:profile": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }

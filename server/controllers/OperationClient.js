@@ -1,9 +1,9 @@
 'use strict';
 
-var oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var OperationClient = require('../service/OperationClientService');
+const oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const OperationClient = require('../service/OperationClientService');
 
 module.exports.getOperationClientDetailedLoggingIsOn = function getOperationClientDetailedLoggingIsOn(req, res, next, uuid) {
   OperationClient.getOperationClientDetailedLoggingIsOn(req.url)

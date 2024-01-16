@@ -11,14 +11,11 @@ const httpClientInterface = require('onf-core-model-ap/applicationPattern/onfMod
  * url String
  **/
 exports.getHttpClientApplicationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-client-interface-1-0:application-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -27,14 +24,11 @@ exports.getHttpClientApplicationName = async function (url) {
  * url String
  **/
 exports.getHttpClientReleaseNumber = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-client-interface-1-0:release-number": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**

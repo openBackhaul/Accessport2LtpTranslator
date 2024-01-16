@@ -1,9 +1,9 @@
 'use strict';
 
-var oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var Core = require('../service/CoreService');
+const oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const Core = require('../service/CoreService');
 
 module.exports.getControlConstruct = async function getControlConstruct(req, res, next) {
   try {

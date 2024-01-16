@@ -8,14 +8,11 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  * url String
  **/
 exports.getOperationServerLifeCycleState = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-server-interface-1-0:life-cycle-state": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -24,14 +21,11 @@ exports.getOperationServerLifeCycleState = async function (url) {
  * url String
  **/
 exports.getOperationServerOperationKey = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-server-interface-1-0:operation-key": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -40,16 +34,11 @@ exports.getOperationServerOperationKey = async function (url) {
  * url String
  **/
 exports.getOperationServerOperationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-server-interface-1-0:operation-name": value
   };
-  if (Object.keys(response).length > 0) {
-    resolve(response[Object.keys(response)[0]]);
-  } else {
-    resolve();
-  }
 }
 
 /**
@@ -61,7 +50,8 @@ exports.getOperationServerOperationName = async function (url) {
  * no response value expected for this operation
  **/
 exports.putOperationServerLifeCycleState = async function (url, body, uuid) {
-  let isUpdated = await fileOperation.writeToDatabaseAsync(url, body, false);
+  const isUpdated = await fileOperation.writeToDatabaseAsync(url, body, false);
+
   if (isUpdated) {
     let forwardingAutomationInputList = await prepareForwardingAutomation.OAMLayerRequest(
       uuid

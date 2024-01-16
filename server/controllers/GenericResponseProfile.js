@@ -1,9 +1,9 @@
 'use strict';
 
-var oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var GenericResponseProfile = require('../service/GenericResponseProfileService');
+const oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const GenericResponseProfile = require('../service/GenericResponseProfileService');
 
 module.exports.getGenericResponseProfileDatatype = function getGenericResponseProfileDatatype(req, res, next, uuid) {
   GenericResponseProfile.getGenericResponseProfileDatatype(req.url)

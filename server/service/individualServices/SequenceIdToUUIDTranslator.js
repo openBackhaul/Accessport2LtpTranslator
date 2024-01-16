@@ -609,7 +609,7 @@ async function step6ReadingClientLtp(clientLtps, mountName) {
  * @param uuid
  * @returns {Promise}
  */
-getDataFromMWDI = async function (callbackName, mountName, fieldsFilter = undefined, uuid = undefined) {
+const getDataFromMWDI = async function (callbackName, mountName, fieldsFilter = undefined, uuid = undefined) {
     let opData = await controlConstructUtil.getForwardingConstructOutputOperationData(callbackName);
 
     let operationPath = opData.operationName;
@@ -630,6 +630,8 @@ getDataFromMWDI = async function (callbackName, mountName, fieldsFilter = undefi
     logger.debug("get request to '" + targetUrl + "'");
 
     const ret = await restClient.startGetRequest(targetUrl, callbackName, opData.operationKey);
+
+    logger.debug("result received from '" + targetUrl + "': " + JSON.stringify(ret));
 
     return ret.message;
 }

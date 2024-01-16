@@ -8,16 +8,11 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  * url String
  **/
 exports.getActionProfileConsequentOperationReference = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
 	"action-profile-1-0:consequent-operation-reference" : value
   };
-  if (Object.keys(response).length > 0) {
-	resolve(response[Object.keys(response)[0]]);
-  } else {
-	resolve();
-  }
 }
 
 /**
@@ -26,14 +21,11 @@ exports.getActionProfileConsequentOperationReference = async function (url) {
  * url String
  **/
 exports.getActionProfileDisplayInNewBrowserWindow = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "action-profile-1-0:display-in-new-browser-window": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -42,14 +34,11 @@ exports.getActionProfileDisplayInNewBrowserWindow = async function (url) {
  * url String
  **/
 exports.getActionProfileInputValueListt = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "action-profile-1-0:input-value-list": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -58,14 +47,11 @@ exports.getActionProfileInputValueListt = async function (url) {
  * url String
  **/
 exports.getActionProfileLabel = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "action-profile-1-0:label": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -74,14 +60,11 @@ exports.getActionProfileLabel = async function (url) {
  * url String
  **/
 exports.getActionProfileOperationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "action-profile-1-0:operation-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
