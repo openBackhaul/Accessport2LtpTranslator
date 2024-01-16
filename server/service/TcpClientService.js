@@ -10,14 +10,11 @@ const ForwardingAutomationService = require('onf-core-model-ap/applicationPatter
  * url String
  **/
 exports.getTcpClientRemoteAddress = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "tcp-client-interface-1-0:remote-address": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -26,14 +23,11 @@ exports.getTcpClientRemoteAddress = async function (url) {
  * url String
  **/
 exports.getTcpClientRemotePort = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "tcp-client-interface-1-0:remote-port": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -42,14 +36,11 @@ exports.getTcpClientRemotePort = async function (url) {
  * url String
  **/
 exports.getTcpClientRemoteProtocol = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "tcp-client-interface-1-0:remote-protocol": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**

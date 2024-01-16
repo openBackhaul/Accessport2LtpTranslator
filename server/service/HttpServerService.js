@@ -8,14 +8,11 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  * url String
  **/
 exports.getHttpServerApplicationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:application-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -24,14 +21,11 @@ exports.getHttpServerApplicationName = async function (url) {
  * url String
  **/
 exports.getHttpServerApplicationPurpose = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:application-purpose": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -40,14 +34,11 @@ exports.getHttpServerApplicationPurpose = async function (url) {
  * url String
  **/
 exports.getHttpServerDataUpdatePeriode = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:data-update-period": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -56,14 +47,11 @@ exports.getHttpServerDataUpdatePeriode = async function (url) {
  * url String
  **/
 exports.getHttpServerOwnerEmailAddress = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:owner-email-address": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -72,14 +60,11 @@ exports.getHttpServerOwnerEmailAddress = async function (url) {
  * url String
  **/
 exports.getHttpServerOwnerName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:owner-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -88,14 +73,11 @@ exports.getHttpServerOwnerName = async function (url) {
  * url String
  **/
 exports.getHttpServerReleaseList = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:release-list": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -104,12 +86,9 @@ exports.getHttpServerReleaseList = async function (url) {
  * url String
  **/
 exports.getHttpServerReleaseNumber = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "http-server-interface-1-0:release-number": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }

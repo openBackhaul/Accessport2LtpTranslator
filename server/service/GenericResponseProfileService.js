@@ -8,14 +8,11 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  * url String
  **/
 exports.getGenericResponseProfileDatatype = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "response-profile-1-0:datatype": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -24,14 +21,11 @@ exports.getGenericResponseProfileDatatype = async function (url) {
  * url String
  **/
 exports.getGenericResponseProfileDescription = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "response-profile-1-0:description": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -40,14 +34,11 @@ exports.getGenericResponseProfileDescription = async function (url) {
  * url String
  **/
 exports.getGenericResponseProfileFieldName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "response-profile-1-0:field-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -56,14 +47,11 @@ exports.getGenericResponseProfileFieldName = async function (url) {
  * url String
  **/
 exports.getGenericResponseProfileOperationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "response-profile-1-0:operation-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -72,14 +60,11 @@ exports.getGenericResponseProfileOperationName = async function (url) {
  * url String
  **/
 exports.getGenericResponseProfileValue = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "response-profile-1-0:value": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**

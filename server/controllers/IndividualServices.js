@@ -1,10 +1,10 @@
 'use strict';
 
-var executionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
-var IndividualServices = require('../service/IndividualServicesService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
+const executionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
+const IndividualServices = require('../service/IndividualServicesService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
 
 module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();

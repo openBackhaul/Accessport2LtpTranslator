@@ -224,7 +224,7 @@ async function getFirstHttpLTPByApplicationName(applicationName) {
 }
 
 async function getProfileStringValueByName(searchedStringValueName) {
-    let stringValue = undefined;
+    let stringValue;
     try {
         let stringProfileInstanceList = await profileCollection.getProfileListForProfileNameAsync(profile.profileNameEnum.STRING_PROFILE);
 

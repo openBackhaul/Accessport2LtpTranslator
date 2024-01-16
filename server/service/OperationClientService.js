@@ -11,14 +11,11 @@ const operationClientInterface = require('onf-core-model-ap/applicationPattern/o
  * url String
  **/
 exports.getOperationClientDetailedLoggingIsOn = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-client-interface-1-0:detailed-logging-is-on": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -27,14 +24,11 @@ exports.getOperationClientDetailedLoggingIsOn = async function (url) {
  * url String
  **/
 exports.getOperationClientLifeCycleState = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-client-interface-1-0:life-cycle-state": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -43,14 +37,11 @@ exports.getOperationClientLifeCycleState = async function (url) {
  * url String
  **/
 exports.getOperationClientOperationKey = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-client-interface-1-0:operation-key": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -59,14 +50,11 @@ exports.getOperationClientOperationKey = async function (url) {
  * url String
  **/
 exports.getOperationClientOperationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-client-interface-1-0:operation-name": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**
@@ -75,14 +63,11 @@ exports.getOperationClientOperationName = async function (url) {
  * url String
  **/
 exports.getOperationClientOperationalState = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
-  response['application/json'] = {
+  const value = await fileOperation.readFromDatabaseAsync(url);
+
+  return {
     "operation-client-interface-1-0:operational-state": value
   };
-  if (Object.keys(response).length > 0) {
-    return response[Object.keys(response)[0]];
-  }
 }
 
 /**

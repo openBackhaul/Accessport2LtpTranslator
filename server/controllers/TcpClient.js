@@ -1,9 +1,9 @@
 'use strict';
 
-var oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
-var responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var TcpClient = require('../service/TcpClientService');
+const oamLogService = require('onf-core-model-ap/applicationPattern/services/OamLogService');
+const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const TcpClient = require('../service/TcpClientService');
 
 module.exports.getTcpClientRemoteAddress = function getTcpClientRemoteAddress(req, res, next, uuid) {
   TcpClient.getTcpClientRemoteAddress(req.url)

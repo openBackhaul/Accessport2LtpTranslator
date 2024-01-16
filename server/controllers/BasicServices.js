@@ -1,11 +1,11 @@
 //@ts-check
 'use strict';
 
-var BasicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
-var responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
-var RestResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
-var RestResponseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
-var ExecutionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
+const BasicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
+const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
+const RestResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
+const RestResponseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
+const ExecutionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
 const logger = require('../service/LoggingService.js').getLogger();
 
 const NEW_RELEASE_FORWARDING_NAME = 'PromptForBequeathingDataCausesTransferOfListOfApplications';
