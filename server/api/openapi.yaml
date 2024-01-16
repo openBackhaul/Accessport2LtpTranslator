@@ -1275,11 +1275,11 @@ paths:
               top-level-equipment-uuid-not-provided:
                 value:
                   mount-name: "513250002"
-                  link-id: h1.c3.h4.c1
+                  link-id: h1.h3.h4.c1
               top-level-equipment-uuid-provided:
                 value:
                   mount-name: "513250010"
-                  link-id: h1.c2.h3.c4
+                  link-id: h1.h2.h3.c4
                   top-level-equipment-uuid: 2-LIM 8xEth
         required: true
       responses:
