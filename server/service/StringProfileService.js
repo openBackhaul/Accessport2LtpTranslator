@@ -12,6 +12,22 @@ const profileConstants = Object.freeze({
   OPERATION_MODE_OFF: 'string-profile-1-0:STRING_VALUE_TYPE_OFF',
 });
 
+
+/**
+ * Returns the name of the String
+ **/
+exports.getStringProfileStringName = async function (url) {
+  let value = await fileOperation.readFromDatabaseAsync(url);
+  if (!value) {
+    value = "";
+  }
+
+  return {
+    "string-profile-1-0:string-name": value
+  };
+}
+
+
 /**
  * Returns the enumeration values of the String
  *
@@ -42,18 +58,6 @@ exports.getStringProfilePattern = async function (url) {
 
   return {
     "string-profile-1-0:pattern": value
-  };
-}
-
-
-/**
- * Returns the name of the String
- **/
-exports.getStringProfileStringName = async function (url) {
-  const value = await fileOperation.readFromDatabaseAsync(url);
-
-  return {
-    "string-profile-1-0:string-name": value
   };
 }
 
