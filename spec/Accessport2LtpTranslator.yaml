@@ -492,11 +492,11 @@ paths:
               top-level-equipment-uuid-not-provided:
                 value:
                   mount-name: '513250002'
-                  link-id: 'h1.h3.h4.c1'
+                  string-of-concatenated-sequence-ids: 'h1.h3.h4.c1'
               top-level-equipment-uuid-provided:
                 value:
                   mount-name: '513250010'
-                  link-id: 'h1.h2.h3.c4'
+                  string-of-concatenated-sequence-ids: 'h6.h2.h4.c1'
                   top-level-equipment-uuid: '2-LIM 8xEth'
       responses:
         '200':
