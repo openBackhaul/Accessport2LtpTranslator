@@ -508,37 +508,39 @@ paths:
                 properties:
                   access-port-to-ltp-mappings:
                     type: array
-                    properties:
-                      uuid:
-                        type: string
-                        description: >
-                          'Identifier of the ltp
-                          from (for first access-port-to-ltp-mappings array item == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.request.body#uuid},
-                          for subsequent access-port-to-ltp-mappings array items == subsequent {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
-                      client-ltps:
-                        type: array
-                        items:
+                    items:
+                      type: object
+                      properties:
+                        uuid:
                           type: string
-                        description: >
-                          'List of client-ltps
-                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
-                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
-                      server-ltps:
-                        type: array
-                        items:
-                          type: string
-                        description: >
-                          'List of server-ltps
-                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
-                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'
-                      layer-protocol-names:
-                        type: array
-                        items:
-                          type: string
-                        description: >
-                          'List of layer-protocol-names from
-                          from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name}
-                          for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
+                          description: >
+                            'Identifier of the ltp
+                            from (for first access-port-to-ltp-mappings array item == {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.request.body#uuid},
+                            for subsequent access-port-to-ltp-mappings array items == subsequent {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.request.body#uuid})'
+                        client-ltps:
+                          type: array
+                          items:
+                            type: string
+                          description: >
+                            'List of client-ltps
+                            from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp}
+                            for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/client-ltp})'
+                        server-ltps:
+                          type: array
+                          items:
+                            type: string
+                          description: >
+                            'List of server-ltps
+                            from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp}
+                            for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/server-ltp})'
+                        layer-protocol-names:
+                          type: array
+                          items:
+                            type: string
+                          description: >
+                            'List of layer-protocol-names from
+                            from (for first access-port-to-ltp-mappings array item == {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name}
+                            for subsequent access-port-to-ltp-mappings array items == subsequent {RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp.response.body#core-model-1-4:control-construct/logical-termination-point/layer-protocol/layer-protocol-name})'
                 example:
                   access-port-to-ltp-mappings:
                     - uuid: 'ETY-2134639620'
