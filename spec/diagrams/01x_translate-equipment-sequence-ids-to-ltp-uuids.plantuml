@@ -4,7 +4,7 @@ skinparam responseMessageBelowArrow true
 title RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData
 
 participant "external" as external
-participant "A2LT://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
+participant "atlt://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
 participant "MWDI://...control-construct?fields=top-level-equipment" as topLevel
   ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=top-level-equipment" as topLevel
 participant "MWDI://.../equipment={uuid}?fields=contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)" as equipment
