@@ -1,11 +1,11 @@
-# Accessport2LtpTranslator  
+# Accessport2LtpTranslator (ATLT)
 
 ### Location  
-The Accessport2LtpTranslator (A2LT) is part of the HighPerformanceNetworkInterface.
+The Accessport2LtpTranslator (ATLT) is part of the HighPerformanceNetworkInterface.
 
 ### Description  
 It is supporting other applications or legacy tools in creating valid RESTCONF URIs.  
-The A2LT is translating port identifiers as they are prevalent in the planning tools into UUIDs of LogicalTerminationPoints as they are used on the harmonized management interface.
+The ATLT is translating port identifiers as they are prevalent in the planning tools into UUIDs of LogicalTerminationPoints as they are used on the harmonized management interface.
 
 ### Relevance
 The Accessport2LtpTranslator serves as a "phone book". 
