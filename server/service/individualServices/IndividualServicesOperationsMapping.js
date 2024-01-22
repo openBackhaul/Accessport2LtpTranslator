@@ -1,6 +1,6 @@
 module.exports.individualServicesOperationsMapping =
     {
-        // A2LT actions
+        // ATLT actions
         "/v1/bequeath-your-data-and-die": {
             "/v1/bequeath-your-data-and-die": {
                 "api-segment": "im",
