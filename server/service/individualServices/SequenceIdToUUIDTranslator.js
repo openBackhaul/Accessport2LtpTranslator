@@ -26,7 +26,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         connectors,
         topLevelRequestUUID,
         validationErrorStep2
-    } = await step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID, equipmentList);
+    } = await step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID, equipmentList, mountName);
 
     if (validationErrorStep2) {
         logger.error(validationErrorStep2);
@@ -37,7 +37,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
     let {
         listOfPairResults,
         validationErrorStep3
-    } = await step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs, connectors, containedHolders, topLevelRequestUUID);
+    } = await step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs, connectors, containedHolders, topLevelRequestUUID, mountName);
 
     if (validationErrorStep3) {
         logger.error(validationErrorStep3);
@@ -111,9 +111,10 @@ function validateResult(callResult) {
  * @param topLevelConnectors
  * @param topLevelContainedHolders
  * @param topLevelUUID
+ * @param mountName
  * @return {Promise<{connectorLocalID: undefined, equipmentUUID: undefined}|string>}
  */
-async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs, topLevelConnectors, topLevelContainedHolders, topLevelUUID) {
+async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs, topLevelConnectors, topLevelContainedHolders, topLevelUUID, mountName) {
 
     let validationErrorStep3 = undefined;
 
@@ -143,7 +144,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
             if (nextUUID) {
                 let urlAdditionStep3 = await controlConstructUtil.getProfileStringValueByName(
                     "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataInHolder");
-                let resultWrapperStep3 = await getDataFromMWDI("RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataInHolder", undefined, urlAdditionStep3, nextUUID);
+                let resultWrapperStep3 = await getDataFromMWDI("RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataInHolder", mountName, urlAdditionStep3, nextUUID);
                 //list of containedHolders, connectors
 
                 //for example {
@@ -321,9 +322,10 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
  *
  * @param topLevelEquipmentUUID
  * @param equipmentList
+ * @param mountName
  * @return {Promise<{topLevelRequestUUID, connectors, validationErrorStep2: undefined, containedHolders}>}
  */
-async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID, equipmentList) {
+async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID, equipmentList, mountName) {
     let topLevelRequestUUID;
     if (topLevelEquipmentUUID && equipmentList.includes(topLevelEquipmentUUID)) {
         topLevelRequestUUID = topLevelEquipmentUUID;
@@ -333,7 +335,7 @@ async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID,
 
     let urlAdditionStep2 = await controlConstructUtil.getProfileStringValueByName(
         "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement");
-    let resultWrapperStep2 = await getDataFromMWDI("RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement", undefined, urlAdditionStep2, topLevelRequestUUID);
+    let resultWrapperStep2 = await getDataFromMWDI("RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement", mountName, urlAdditionStep2, topLevelRequestUUID);
     //result contains list of containedHolders and list of connectors
 
     //for example {
