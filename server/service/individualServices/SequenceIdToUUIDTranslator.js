@@ -87,7 +87,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
     };
 }
 
-function validateResult(callResult) {
+function validateResultStep1(callResult) {
 
     if (callResult) {
         if (callResult.code !== 500) {
@@ -118,12 +118,11 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
     let validationErrorStep3 = undefined;
 
-    //result fields
     let equipmentUUID = undefined;
-    let connectorLocalID = undefined;
 
     let nextUUID = undefined;
     let connectorsToQuery = topLevelConnectors;
+    let holdersToQuery = topLevelContainedHolders;
 
     let listOfPairResults = [];
 
@@ -134,7 +133,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
         let sequenceID = inputSequenceID.substring(1); //convert "h1" to "1"
 
         if (inputSequenceID.startsWith("h")) {
-            for (const containedHolder of topLevelContainedHolders) {
+            for (const containedHolder of holdersToQuery) {
                 if (sequenceID === containedHolder["sequence-id"]) {
                     nextUUID = containedHolder["occupying-fru"];
                     break;
@@ -173,14 +172,16 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                 //   ]
                 // }
 
-                let validResultStep3 = validateResult(resultWrapperStep3);
+                let validResultStep3 = validateResultStep2And3(resultWrapperStep3);
 
                 if (validResultStep3 === false) {
                     validationErrorStep3 = "step3 request not valid";
                     break;
                 }
 
+                //use holder lists for next loop
                 connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["connector"];
+                holdersToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["contained-holder"];
             }
         }
 
@@ -192,6 +193,8 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                 equipmentUUID = topLevelUUID;
             }
 
+            let connectorLocalID = undefined;
+
             for (const connector of connectorsToQuery) {
                 if (sequenceID === connector["sequence-id"]) {
                     connectorLocalID = connector["local-id"];
@@ -199,11 +202,12 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                 }
             }
 
-            let pairResult = {equipmentUUID, connectorLocalID};
-            listOfPairResults.push(pairResult);
+            if (connectorLocalID) {
+                let pairResult = {equipmentUUID, connectorLocalID};
+                listOfPairResults.push(pairResult);
 
-            equipmentUUID = undefined;
-            connectorLocalID = undefined;
+                equipmentUUID = undefined;
+            }
         }
     }
 
@@ -289,7 +293,7 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
     //   ]
     // }
 
-    let validResultOfStep1 = validateResult(step1ResultWrapper);
+    let validResultOfStep1 = validateResultStep1(step1ResultWrapper);
 
     if (validResultOfStep1 === false) {
         validationErrorStep1 = "step1 result not successful, mwdi reported: " + step1ResultWrapper?.code + " " + step1ResultWrapper?.message;
@@ -316,6 +320,18 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
     }
 
     return {equipmentList, validationErrorStep1};
+}
+
+function validateResultStep2And3(callResult) {
+    if (callResult) {
+        if (callResult.code !== 500) {
+            if (callResult["core-model-1-4:equipment"].length > 0) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -364,7 +380,7 @@ async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID,
     //   ]
     // }
 
-    let validResultStep2 = validateResult(resultWrapperStep2);
+    let validResultStep2 = validateResultStep2And3(resultWrapperStep2);
 
     let validationErrorStep2 = undefined;
     let containedHolders = undefined;
@@ -374,10 +390,22 @@ async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID,
         validationErrorStep2 = "step2 result not valid";
     } else {
         containedHolders = resultWrapperStep2["core-model-1-4:equipment"][0]["contained-holder"];
-        connectors = resultWrapperStep2["core-model-1-4:equipment"]["connector"];
+        connectors = resultWrapperStep2["core-model-1-4:equipment"][0]["connector"];
     }
 
     return {containedHolders, connectors, topLevelRequestUUID, validationErrorStep2};
+}
+
+function validateResultStep4(callResult) {
+    if (callResult) {
+        if (callResult.code !== 500) {
+            if (callResult["core-model-1-4:control-construct"][0]["logical-termination-point"]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 async function step4ReadingAugmentOfAllLtps(mountName) {
@@ -414,7 +442,7 @@ async function step4ReadingAugmentOfAllLtps(mountName) {
     //   ]
     // }
 
-    let validResultStep4 = validateResult(resultWrapperStep4);
+    let validResultStep4 = validateResultStep4(resultWrapperStep4);
     let validationErrorStep4 = undefined;
 
     let ltps = undefined;
@@ -428,10 +456,22 @@ async function step4ReadingAugmentOfAllLtps(mountName) {
     return {ltps, validationErrorStep4};
 }
 
+function validateResultStep5(callResult) {
+    if (callResult) {
+        if (callResult.code !== 500) {
+            if (callResult["core-model-1-4:logical-termination-point"]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mountName) {
     let lowestLtpUUID = undefined;
     for (const resultLTP of ltps) {
-        if (resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"][0] === equipmentUUID && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["connector"] === connectorLocalID) {
+        if (resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"] && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"][0] === equipmentUUID && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["connector"] === connectorLocalID) {
             lowestLtpUUID = resultLTP.uuid;
             break;
         }
@@ -447,36 +487,32 @@ async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mou
         //service returns list of clientLtps, list of serverLtps, list of layer-protocol
 
         //for example {
-        //   "core-model-1-4:control-construct": [
-        //     {
-        //       "logical-termination-point": [
+        //     "core-model-1-4:logical-termination-point": [
         //         {
-        //           "uuid": "LTP-MWS-2_LAN-4-RJ45",
-        //           "client-ltp": [
-        //             "LTP-ETC-TTP-2_LAN-4-RJ45"
-        //           ],
-        //           "server-ltp": [
-        //             "LTP-ETY-TTP-2_LAN-4-RJ45"
-        //           ],
-        //           "layer-protocol": [
-        //             {
-        //               "local-id": "LP-MWS-2_LAN-4-RJ45",
-        //               "layer-protocol-name": "pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER"
-        //             }
-        //           ]
+        //             "uuid": "LTP-MWS-2_LAN-4-RJ45",
+        //             "client-ltp": [
+        //                 "LTP-ETC-TTP-2_LAN-4-RJ45"
+        //             ],
+        //             "server-ltp": [
+        //                 "LTP-ETY-TTP-2_LAN-4-RJ45"
+        //             ],
+        //             "layer-protocol": [
+        //                 {
+        //                     "local-id": "LP-MWS-2_LAN-4-RJ45",
+        //                     "layer-protocol-name": "pure-ethernet-structure-2-0:LAYER_PROTOCOL_NAME_TYPE_PURE_ETHERNET_STRUCTURE_LAYER"
+        //                 }
+        //             ]
         //         }
-        //       ]
-        //     }
-        //   ]
+        //     ]
         // }
 
-        let validResultStep5 = validateResult(resultWrapperStep5);
+        let validResultStep5 = validateResultStep5(resultWrapperStep5);
 
         if (validResultStep5 === false) {
             validationErrorStep5 = "step5 request not valid";
         } else {
             //should always be one ltp in list because we requested the lowestLtpUUID
-            clientLtps = resultWrapperStep5["core-model-1-4:control-construct"][0]["logical-termination-point"][0].clientLtps;
+            clientLtps = resultWrapperStep5["core-model-1-4:logical-termination-point"][0]["client-ltp"];
         }
 
     } else {
@@ -484,6 +520,23 @@ async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mou
     }
 
     return {clientLtps, validationErrorStep5};
+}
+
+function validateResultStep6(callResult) {
+
+    if (callResult) {
+        if (callResult.code !== 500) {
+
+            let clientLtps = callResult["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["client-ltp"];
+            let serverLtps = callResult["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["server-ltp"];
+
+            if (clientLtps && serverLtps) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 async function step6ReadingClientLtp(clientLtps, mountName) {
@@ -523,7 +576,7 @@ async function step6ReadingClientLtp(clientLtps, mountName) {
         //   ]
         // }
 
-        let validResultStep6 = validateResult(resultWrapperStep6);
+        let validResultStep6 = validateResultStep6(resultWrapperStep6);
 
         if (validResultStep6 === false) {
             validationErrorStep6 = "step6 request not valid";
@@ -632,7 +685,9 @@ const getDataFromMWDI = async function (callbackName, mountName, fieldsFilter = 
     let targetUrl = requestUtil.buildControllerTargetPath(opData.protocol, opData.address, opData.port) + operationPath;
 
     if (fieldsFilter) {
-        targetUrl += "?fields=" + fieldsFilter;
+        targetUrl += "?fields=" + encodeURIComponent(fieldsFilter);
+        //must be manually encoded
+        targetUrl = targetUrl.replaceAll("(", "%28").replaceAll(")", "%29");
     }
 
     logger.debug("get request to '" + targetUrl + "'");
