@@ -179,7 +179,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                     break;
                 }
 
-                connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"]["connector"];
+                connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["connector"];
             }
         }
 
@@ -240,8 +240,8 @@ function buildResultEntry(resultWrapperStep6, requestUUID) {
     //   ]
     // }
 
-    let clientLtps = resultWrapperStep6["core-model-1-4:control-construct"]["logical-termination-point"][0]["client-ltp"];
-    let serverLtps = resultWrapperStep6["core-model-1-4:control-construct"]["logical-termination-point"][0]["server-ltp"];
+    let clientLtps = resultWrapperStep6["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["client-ltp"];
+    let serverLtps = resultWrapperStep6["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["server-ltp"];
 
     let listOfLayerProtocolNames = [];
     for (const ltp of resultWrapperStep6["core-model-1-4:control-construct"]["logical-termination-point"]) {
@@ -293,18 +293,24 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
     if (validResultOfStep1 === false) {
         validationErrorStep1 = "step1 result not successful, mwdi reported: " + step1ResultWrapper?.code + " " + step1ResultWrapper?.message;
     } else {
-        equipmentList = step1ResultWrapper["core-model-1-4:control-construct"]["top-level-equipment"];
+        if (step1ResultWrapper["core-model-1-4:control-construct"].length === 0) {
+            validationErrorStep1 = "no top level equipment list in result";
+        } else {
+            equipmentList = step1ResultWrapper["core-model-1-4:control-construct"][0]["top-level-equipment"];
 
-        if (topLevelEquipmentUUID) {
-            //validate uuid against list of top level uuids
-            if (equipmentList.includes(topLevelEquipmentUUID) === false) {
-                validationErrorStep1 = "provided topLevelEquipmentUUID not contained in MWDI listOfTopLevelUUIDs";
+            if (topLevelEquipmentUUID) {
+                //validate uuid against list of top level uuids
+                if (equipmentList.includes(topLevelEquipmentUUID) === false) {
+                    validationErrorStep1 = "provided topLevelEquipmentUUID not contained in MWDI listOfTopLevelUUIDs";
+                }
             }
-        }
-        //no topLevelEquipmentUUID provided (optional parameter)
-        else if (equipmentList.length > 1) {
-            //list not valid - too many entries
-            validationErrorStep1 = "too many entries in returned topLevelUUIDs";
+            //no topLevelEquipmentUUID provided (optional parameter)
+            else if (equipmentList.length > 1) {
+                //list not valid - too many entries
+                validationErrorStep1 = "too many entries in returned topLevelUUIDs";
+            } else if (equipmentList.length === 0) {
+                validationErrorStep1 = "no entries in returned topLevelUUIDs";
+            }
         }
     }
 
@@ -365,7 +371,7 @@ async function step2ReadingEquipmentDataOfTopLevelElement(topLevelEquipmentUUID,
     if (validResultStep2 === false) {
         validationErrorStep2 = "step2 result not valid";
     } else {
-        containedHolders = resultWrapperStep2["core-model-1-4:equipment"]["contained-holder"];
+        containedHolders = resultWrapperStep2["core-model-1-4:equipment"][0]["contained-holder"];
         connectors = resultWrapperStep2["core-model-1-4:equipment"]["connector"];
     }
 
@@ -414,7 +420,7 @@ async function step4ReadingAugmentOfAllLtps(mountName) {
     if (validResultStep4 === false) {
         validationErrorStep4 = "step4 request not valid";
     } else {
-        ltps = resultWrapperStep4["core-model-1-4:control-construct"]["logical-termination-point"];
+        ltps = resultWrapperStep4["core-model-1-4:control-construct"][0]["logical-termination-point"];
     }
 
     return {ltps, validationErrorStep4};
@@ -468,7 +474,7 @@ async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mou
             validationErrorStep5 = "step5 request not valid";
         } else {
             //should always be one ltp in list because we requested the lowestLtpUUID
-            clientLtps = resultWrapperStep5["core-model-1-4:control-construct"]["logical-termination-point"][0].clientLtps;
+            clientLtps = resultWrapperStep5["core-model-1-4:control-construct"][0]["logical-termination-point"][0].clientLtps;
         }
 
     } else {
