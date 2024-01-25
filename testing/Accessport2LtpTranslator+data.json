@@ -2244,11 +2244,6 @@
                     "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
                   },
                   {
-                    "local-id": "100",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "a2lt-1-0-0-op-s-bm-013"
-                  },
-                  {
                     "value-name": "ForwardingName",
                     "value": "ServiceRequestCausesLtpDeletionRequest"
                   }
@@ -2259,6 +2254,11 @@
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT",
                     "logical-termination-point": "a2lt-1-0-0-op-s-bm-009"
                   },
+                  {
+                    "local-id": "100",
+                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                    "logical-termination-point": "a2lt-1-0-0-op-s-bm-013"
+                  },                  
                   {
                     "local-id": "200",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
