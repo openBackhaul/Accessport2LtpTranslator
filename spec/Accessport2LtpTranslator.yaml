@@ -750,7 +750,7 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
+                    example: 'contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))'
                   description: >
                     'If different from empty string, a fields filter with the following value to be added to the request
                     from [/core-model-1-4:control-construct/profile-collection/profile=atlt-1-0-0-string-p-001/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
