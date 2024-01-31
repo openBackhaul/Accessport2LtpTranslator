@@ -160,6 +160,9 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
             logger.error(e, "error during " + operationName);
             let response = e.response;
 
+            let responseStatus = response && response.status ? response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+            let responseData = response && response.data ? response.data : e;
+
             executionAndTraceService.recordServiceRequestFromClient(
                 appInformation["application-name"],
                 appInformation["release-number"],
@@ -168,10 +171,10 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                response.status ? response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                responseStatus,
                 undefined,
-                response.data ? response.data : e);
+                responseData);
 
-            return {code: response.status, message: response.data, headers: requestHeader};
+            return {code: responseStatus, message: responseData, headers: requestHeader};
         });
 }

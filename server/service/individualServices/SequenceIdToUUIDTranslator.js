@@ -17,7 +17,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
 
     if (validationErrorStep1) {
         logger.error(validationErrorStep1);
-        return [];
+        return {};
     }
 
     //2. GET ReadingEquipmentDataOfTopLevelElement
@@ -30,60 +30,60 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
 
     if (validationErrorStep2) {
         logger.error(validationErrorStep2);
-        return [];
+        return {};
     }
 
     //3. GET ReadingEquipmentDataInHolder
     let {
-        listOfPairResults,
+        pairResult,
         validationErrorStep3
     } = await step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs, connectors, containedHolders, topLevelRequestUUID, mountName);
 
     if (validationErrorStep3) {
         logger.error(validationErrorStep3);
-        return [];
+        return {};
     }
 
-    let allResultLists = [];
+    // let allResultLists = [];
 
-    for (const pairResult of listOfPairResults) {
-        //4. GET ReadingAugmentOfAllLtps
-        let {ltps, validationErrorStep4} = await step4ReadingAugmentOfAllLtps(mountName);
+    // for (const pairResult of listOfPairResults) {
+    //4. GET ReadingAugmentOfAllLtps
+    let {ltps, validationErrorStep4} = await step4ReadingAugmentOfAllLtps(mountName);
 
-        if (validationErrorStep4) {
-            logger.error(validationErrorStep4);
-            return [];
-        }
-
-        //5. GET ReadingServingLtp
-        let {
-            clientLtps,
-            validationErrorStep5
-        } = await step5ReadingServingLtp(ltps, pairResult.equipmentUUID, pairResult.connectorLocalID, mountName);
-
-        if (validationErrorStep5) {
-            logger.error(validationErrorStep5);
-            return [];
-        }
-
-        //6. GET ReadingClientLtp
-        let {
-            resultList,
-            validationErrorStep6
-        } = await step6ReadingClientLtp(clientLtps, mountName);
-
-        if (validationErrorStep6) {
-            logger.error(validationErrorStep6);
-            return [];
-        }
-
-        allResultLists = allResultLists.concat(resultList);
+    if (validationErrorStep4) {
+        logger.error(validationErrorStep4);
+        return {};
     }
 
-    logger.info('translation completed with result: ' + JSON.stringify(allResultLists));
+    //5. GET ReadingServingLtp
+    let {
+        clientLtps,
+        validationErrorStep5
+    } = await step5ReadingServingLtp(ltps, pairResult.equipmentUUID, pairResult.connectorLocalID, mountName);
+
+    if (validationErrorStep5) {
+        logger.error(validationErrorStep5);
+        return {};
+    }
+
+    //6. GET ReadingClientLtp
+    let {
+        resultList,
+        validationErrorStep6
+    } = await step6ReadingClientLtp(clientLtps, mountName);
+
+    if (validationErrorStep6) {
+        logger.error(validationErrorStep6);
+        return {};
+    }
+
+    // allResultLists = allResultLists.concat(resultList);
+    // }
+
+    logger.info('translation completed with result: ' + JSON.stringify(resultList));
 
     return {
-        "access-port-to-ltp-mappings": allResultLists
+        "access-port-to-ltp-mappings": resultList
     };
 }
 
@@ -95,7 +95,7 @@ function validateResultStep1(callResult) {
 
             //check for invalid return value
             //often mwdi returns [{}] for empty result
-            let emptyResult = constructList.length === 1 && Object.keys(constructList[0]).length === 0;
+            let emptyResult = constructList && constructList.length === 1 && Object.keys(constructList[0]).length === 0;
 
             if (emptyResult === false) {
                 return true;
@@ -124,19 +124,28 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
     let connectorsToQuery = topLevelConnectors;
     let holdersToQuery = topLevelContainedHolders;
 
-    let listOfPairResults = [];
+    // let listOfPairResults = [];
+    let pairResult = undefined;
 
     let listOfSequenceIDs = stringOfConcatenatedSequenceIDs.split('.');
     //note: sequenceIDs are not unique across holders and connectors
     for (const inputSequenceID of listOfSequenceIDs) {
 
+        logger.debug("searching sequence " + inputSequenceID);
         let sequenceID = inputSequenceID.substring(1); //convert "h1" to "1"
 
         if (inputSequenceID.startsWith("h")) {
             for (const containedHolder of holdersToQuery) {
-                if (sequenceID === containedHolder["sequence-id"]) {
-                    nextUUID = containedHolder["occupying-fru"];
-                    break;
+                let containedHolderSeqId = containedHolder["equipment-augment-1-0:holder-pac"]["sequence-id"];
+                logger.debug("checking sequenceId " + sequenceID + " against holderSeqId" + containedHolderSeqId);
+                if (sequenceID == containedHolderSeqId) {
+                    if (containedHolder["occupying-fru"]) {
+                        nextUUID = containedHolder["occupying-fru"];
+                        logger.debug("found matching uuid fru: " + nextUUID);
+                        break;
+                    } else {
+                        logger.error("no occupying-fru for contained-holder: " + JSON.stringify(containedHolder));
+                    }
                 }
             }
 
@@ -175,9 +184,11 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                 let validResultStep3 = validateResultStep2And3(resultWrapperStep3);
 
                 if (validResultStep3 === false) {
-                    validationErrorStep3 = "step3 request not valid";
+                    validationErrorStep3 = "step3 request not valid: request for " + mountName + " and uuid " + nextUUID + " failed";
                     break;
                 }
+
+                logger.debug("updating connectors and holders to query from  " + nextUUID);
 
                 //use holder lists for next loop
                 connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["connector"];
@@ -195,36 +206,41 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
             let connectorLocalID = undefined;
 
-            for (const connector of connectorsToQuery) {
-                if (sequenceID === connector["sequence-id"]) {
-                    connectorLocalID = connector["local-id"];
-                    break;
+            if (connectorsToQuery) {
+                for (const connector of connectorsToQuery) {
+                    if (sequenceID == connector["equipment-augment-1-0:connector-pac"]["sequence-id"]) {
+                        connectorLocalID = connector["local-id"];
+                        break;
+                    }
                 }
             }
 
             if (connectorLocalID) {
-                let pairResult = {equipmentUUID, connectorLocalID};
-                listOfPairResults.push(pairResult);
+                pairResult = {equipmentUUID, connectorLocalID};
+                // listOfPairResults.push(pairResult);
+                // equipmentUUID = undefined;
 
-                equipmentUUID = undefined;
+                //loop should be finished now - connector is last entry
             }
         }
     }
 
-    if (listOfPairResults.length === 0) {
-        validationErrorStep3 = "step3 no results";
-    }
+    // if (listOfPairResults.length === 0) {
+    //     if (validationErrorStep3) {
+    //         validationErrorStep3 = validationErrorStep3 + " - no results";
+    //     } else {
+    //         validationErrorStep3 = "step3 no results";
+    //     }
+    // }
 
-    return {listOfPairResults, validationErrorStep3};
+    return {pairResult, validationErrorStep3};
 }
 
 function buildResultEntry(resultWrapperStep6, requestUUID) {
     //{[clientLtps], [serverLtps], [layer-protocol(layer-protocol-name)]}
 
     //for example {
-    //   "core-model-1-4:control-construct": [
-    //     {
-    //       "logical-termination-point": [
+    //   "core-model-1-4:logical-termination-point": [
     //         {
     //           "uuid": "LTP-MWS-2_LAN-4-RJ45",
     //           "client-ltp": [
@@ -240,16 +256,19 @@ function buildResultEntry(resultWrapperStep6, requestUUID) {
     //             }
     //           ]
     //         }
-    //       ]
-    //     }
     //   ]
     // }
 
-    let clientLtps = resultWrapperStep6["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["client-ltp"];
-    let serverLtps = resultWrapperStep6["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["server-ltp"];
+    let clientLtps = [];
+    //clientLtp may be not available when reached the lowest request level
+    if (resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"] && resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"].length > 0) {
+        clientLtps = resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"];
+    }
+
+    let serverLtps = resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["server-ltp"];
 
     let listOfLayerProtocolNames = [];
-    for (const ltp of resultWrapperStep6["core-model-1-4:control-construct"]["logical-termination-point"]) {
+    for (const ltp of resultWrapperStep6["core-model-1-4:logical-termination-point"]) {
         for (const layerProtocol of ltp["layer-protocol"]) {
             listOfLayerProtocolNames.push(layerProtocol["layer-protocol-name"]);
         }
@@ -526,13 +545,7 @@ function validateResultStep6(callResult) {
 
     if (callResult) {
         if (callResult.code !== 500) {
-
-            let clientLtps = callResult["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["client-ltp"];
-            let serverLtps = callResult["core-model-1-4:control-construct"][0]["logical-termination-point"][0]["server-ltp"];
-
-            if (clientLtps && serverLtps) {
-                return true;
-            }
+            return true;
         }
     }
 
@@ -585,8 +598,13 @@ async function step6ReadingClientLtp(clientLtps, mountName) {
             let resultEntry = buildResultEntry(resultWrapperStep6, step6RequestUUID);
             resultList.push(resultEntry);
 
-            //set child clientltps to query in next loop
-            clientLtps = resultWrapperStep6.clientLtps;
+            if (resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"]) {
+                //set child clientltps to query in next loop
+                clientLtps = resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"];
+            } else {
+                //reached lowest level - no client ltps available
+                clientLtps = [];
+            }
         }
     }
 
