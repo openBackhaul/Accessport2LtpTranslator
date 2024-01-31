@@ -223,7 +223,7 @@
               "string-name": "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement"
             },
             "string-profile-configuration": {
-              "string-value": "contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)"
+              "string-value": "contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))"
             }
           }
         },
@@ -235,7 +235,7 @@
               "string-name": "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingEquipmentDataInHolder"
             },
             "string-profile-configuration": {
-              "string-value": "contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)"
+              "string-value": "contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))"
             }
           }
         },
