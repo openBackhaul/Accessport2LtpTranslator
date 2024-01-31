@@ -12,7 +12,7 @@ module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie (req, re
   IndividualServices.bequeathYourDataAndDie(req.url, body, user, originator, xCorrelator, traceIndicator, customerJourney)
     .then(async function (response) {
       let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
-      let responseCode = response.code;
+      let responseCode = responseCodeEnum.code.NO_CONTENT;
       let responseBody = response;
       responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
       executionAndTraceService.recordServiceRequest(xCorrelator, traceIndicator, user, originator, req.url, responseCode, req.body, responseBody);
