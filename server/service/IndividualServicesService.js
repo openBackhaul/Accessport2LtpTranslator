@@ -47,10 +47,14 @@ exports.translateEquipmentSequenceIdsToLtpUuids = function(requestUrl,body,user,
   return new Promise(async function (resolve, reject) {
     let mountName = body['mount-name'];
     let stringOfConcatenatedSequenceIDs = body['string-of-concatenated-sequence-ids'];
-    let topLevelEquipmentUUID = body['topLevelEquipmentUUID'];
+    let topLevelEquipmentUUID = body['top-level-equipment-uuid'];
 
     let resultDataArray = await sequenceToUUIDTranslator.handleTranslateEquipmentSequenceIDsToLTPUUIDs(mountName, stringOfConcatenatedSequenceIDs, topLevelEquipmentUUID);
-    resolve(resultDataArray);
+    if (resultDataArray["access-port-to-ltp-mappings"]) {
+      resolve(resultDataArray);
+    } else {
+      reject(resultDataArray);
+    }
   });
 }
 
