@@ -233,6 +233,10 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
     //     }
     // }
 
+    if (pairResult === undefined && validationErrorStep3 === undefined) {
+        validationErrorStep3 = "step3 no results";
+    }
+
     return {pairResult, validationErrorStep3};
 }
 
@@ -488,10 +492,21 @@ function validateResultStep5(callResult) {
 }
 
 async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mountName) {
+
+    logger.debug("step5 input params equipmentUUID: " + equipmentUUID + ", connectorLocalID: " + connectorLocalID);
+
     let lowestLtpUUID = undefined;
     for (const resultLTP of ltps) {
-        if (resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"] && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"][0] === equipmentUUID && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["connector"] === connectorLocalID) {
-            lowestLtpUUID = resultLTP.uuid;
+        if (resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"]) {
+            for (const equipment of resultLTP["ltp-augment-1-0:ltp-augment-pac"]["equipment"]) {
+                if (equipment == equipmentUUID && resultLTP["ltp-augment-1-0:ltp-augment-pac"]["connector"] === connectorLocalID) {
+                    lowestLtpUUID = resultLTP.uuid;
+                    break;
+                }
+            }
+        }
+
+        if (lowestLtpUUID) {
             break;
         }
     }
