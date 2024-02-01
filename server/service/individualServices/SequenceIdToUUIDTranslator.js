@@ -259,7 +259,10 @@ function buildResultEntry(resultWrapperStep5Or6, requestUUID) {
         clientLtps = resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["client-ltp"];
     }
 
-    let serverLtps = resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["server-ltp"];
+    let serverLtps = [];
+    if (resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["server-ltp"] && resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["server-ltp"].length > 0) {
+        serverLtps = resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["server-ltp"];
+    }
 
     let listOfLayerProtocolNames = [];
     for (const ltp of resultWrapperStep5Or6["core-model-1-4:logical-termination-point"]) {
