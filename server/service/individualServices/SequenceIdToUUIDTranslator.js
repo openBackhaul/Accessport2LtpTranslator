@@ -78,7 +78,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         return {};
     }
 
-    resultList.concat(resultListStep6Entries);
+    resultList = resultList.concat(resultListStep6Entries);
 
     logger.info('translation completed with result: ' + JSON.stringify(resultList));
 
