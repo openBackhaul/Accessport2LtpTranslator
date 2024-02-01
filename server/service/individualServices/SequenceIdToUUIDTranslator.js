@@ -5,9 +5,8 @@ const logger = require('../LoggingService.js').getLogger();
 
 exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountName, stringOfConcatenatedSequenceIDs, topLevelEquipmentUUID) {
 
-    //example swagger mandatory input value for payload is missing like "string-of-concatenated-sequence-ids": "h1.c2"
-
-    logger.info('translation starting with params: mountName:' + mountName + " stringOfConcatenatedSequenceIDs:" + stringOfConcatenatedSequenceIDs + " topLevelEquipmentUUID:" + topLevelEquipmentUUID);
+    logger.info('translation starting with params: mountName:' + mountName + " stringOfConcatenatedSequenceIDs:" + stringOfConcatenatedSequenceIDs
+        + " topLevelEquipmentUUID:" + topLevelEquipmentUUID);
 
     //1. GET ReadingUuidsOfTopLevelEquipment
     let {
@@ -44,9 +43,6 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         return {};
     }
 
-    // let allResultLists = [];
-
-    // for (const pairResult of listOfPairResults) {
     //4. GET ReadingAugmentOfAllLtps
     let {ltps, validationErrorStep4} = await step4ReadingAugmentOfAllLtps(mountName);
 
@@ -55,9 +51,12 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         return {};
     }
 
+    let resultList = [];
+
     //5. GET ReadingServingLtp
     let {
         clientLtps,
+        resultListStep5Entry,
         validationErrorStep5
     } = await step5ReadingServingLtp(ltps, pairResult.equipmentUUID, pairResult.connectorLocalID, mountName);
 
@@ -66,9 +65,11 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         return {};
     }
 
+    resultList.push(resultListStep5Entry);
+
     //6. GET ReadingClientLtp
     let {
-        resultList,
+        resultListStep6Entries,
         validationErrorStep6
     } = await step6ReadingClientLtp(clientLtps, mountName);
 
@@ -77,8 +78,7 @@ exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountNam
         return {};
     }
 
-    // allResultLists = allResultLists.concat(resultList);
-    // }
+    resultList.concat(resultListStep6Entries);
 
     logger.info('translation completed with result: ' + JSON.stringify(resultList));
 
@@ -217,21 +217,11 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
             if (connectorLocalID) {
                 pairResult = {equipmentUUID, connectorLocalID};
-                // listOfPairResults.push(pairResult);
-                // equipmentUUID = undefined;
 
                 //loop should be finished now - connector is last entry
             }
         }
     }
-
-    // if (listOfPairResults.length === 0) {
-    //     if (validationErrorStep3) {
-    //         validationErrorStep3 = validationErrorStep3 + " - no results";
-    //     } else {
-    //         validationErrorStep3 = "step3 no results";
-    //     }
-    // }
 
     if (pairResult === undefined && validationErrorStep3 === undefined) {
         validationErrorStep3 = "step3 no results";
@@ -240,7 +230,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
     return {pairResult, validationErrorStep3};
 }
 
-function buildResultEntry(resultWrapperStep6, requestUUID) {
+function buildResultEntry(resultWrapperStep5Or6, requestUUID) {
     //{[clientLtps], [serverLtps], [layer-protocol(layer-protocol-name)]}
 
     //for example {
@@ -264,21 +254,21 @@ function buildResultEntry(resultWrapperStep6, requestUUID) {
     // }
 
     let clientLtps = [];
-    //clientLtp may be not available when reached the lowest request level
-    if (resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"] && resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"].length > 0) {
-        clientLtps = resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["client-ltp"];
+    // clientLtp may be not available when reached the lowest request level
+    if (resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["client-ltp"] && resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["client-ltp"].length > 0) {
+        clientLtps = resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["client-ltp"];
     }
 
-    let serverLtps = resultWrapperStep6["core-model-1-4:logical-termination-point"][0]["server-ltp"];
+    let serverLtps = resultWrapperStep5Or6["core-model-1-4:logical-termination-point"][0]["server-ltp"];
 
     let listOfLayerProtocolNames = [];
-    for (const ltp of resultWrapperStep6["core-model-1-4:logical-termination-point"]) {
+    for (const ltp of resultWrapperStep5Or6["core-model-1-4:logical-termination-point"]) {
         for (const layerProtocol of ltp["layer-protocol"]) {
             listOfLayerProtocolNames.push(layerProtocol["layer-protocol-name"]);
         }
     }
 
-    //return format {list of (uuid, [clientLtps], [serverLtps], [layer-protocol-names])}
+    // return format {list of (uuid, [clientLtps], [serverLtps], [layer-protocol-names])}
 
     return {
         "uuid": requestUUID,
@@ -301,7 +291,7 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
     let urlAdditionStep1 = await controlConstructUtil.getProfileStringValueByName(
         "RequestForTranslatingEquipmentSequenceIdCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment");
     let step1ResultWrapper = await getDataFromMWDI("RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment", mountName, urlAdditionStep1);
-    //expected format [TopLevelUuids]
+    // expected format [TopLevelUuids]
 
     //for example {
     //   "core-model-1-4:control-construct": [
@@ -513,6 +503,7 @@ async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mou
 
     let validationErrorStep5 = undefined;
     let clientLtps = undefined;
+    let resultListStep5Entry = undefined;
 
     if (lowestLtpUUID) {
         let urlAdditionStep5 = await controlConstructUtil.getProfileStringValueByName(
@@ -547,13 +538,15 @@ async function step5ReadingServingLtp(ltps, equipmentUUID, connectorLocalID, mou
         } else {
             //should always be one ltp in list because we requested the lowestLtpUUID
             clientLtps = resultWrapperStep5["core-model-1-4:logical-termination-point"][0]["client-ltp"];
+
+            resultListStep5Entry = buildResultEntry(resultWrapperStep5, lowestLtpUUID);
         }
 
     } else {
         validationErrorStep5 = "step5 no valid uuid for request found";
     }
 
-    return {clientLtps, validationErrorStep5};
+    return {clientLtps, resultListStep5Entry, validationErrorStep5};
 }
 
 function validateResultStep6(callResult) {
@@ -692,7 +685,9 @@ async function step6ReadingClientLtp(clientLtps, mountName) {
     //   ]
     // }
 
-    return {resultList, validationErrorStep6};
+    let resultListStep6Entries = resultList;
+
+    return {resultListStep6Entries, validationErrorStep6};
 }
 
 /**
