@@ -776,8 +776,11 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:connector-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -787,21 +790,27 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:holder-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:connector-pac:
+                                    sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
-                                  sequence-id: 2
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
@@ -908,8 +917,11 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:connector-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -919,21 +931,27 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:holder-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:connector-pac:
+                                    sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
-                                  sequence-id: 2
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
