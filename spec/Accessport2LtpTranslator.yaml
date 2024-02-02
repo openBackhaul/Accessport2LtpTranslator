@@ -879,12 +879,12 @@ paths:
                     Iterate over {$request.body#string-of-concatenated-sequence-ids}, with sequenceId = current item:
                     If (sequenceId==h*)
                       then: uuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
-                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder.sequence-id}==sequenceId
+                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder/equipment-augment-1-0:holder-pac/sequence-id}==sequenceId
                     else if (sequenceId==c*)
                       then:
                         uuid = equipmentUuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/uuid},
-                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.local-id}
-                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.sequence-id}==sequenceId
+                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector/local-id}
+                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector/equipment-augment-1-0:connector-pac/sequence-id}==sequenceId
                         (equipmentUuid, connectorLocalId)-pair is to be stored temporarily in memory
                 - name: fields
                   in: query
