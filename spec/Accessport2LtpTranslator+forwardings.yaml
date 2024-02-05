@@ -408,7 +408,7 @@ forwardings:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
         uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder;connector
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))
         uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-001
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataInHolder
@@ -423,7 +423,7 @@ forwardings:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
         uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder;connector
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))
         uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-001
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps

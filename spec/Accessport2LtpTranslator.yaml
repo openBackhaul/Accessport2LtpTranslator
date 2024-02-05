@@ -750,7 +750,7 @@ paths:
                   required: true
                   schema:
                     type: string
-                    example: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
+                    example: 'contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))'
                   description: >
                     'If different from empty string, a fields filter with the following value to be added to the request
                     from [/core-model-1-4:control-construct/profile-collection/profile=atlt-1-0-0-string-p-001/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
@@ -776,8 +776,11 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:connector-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -787,21 +790,27 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:holder-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:connector-pac:
+                                    sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
-                                  sequence-id: 2
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
@@ -870,19 +879,19 @@ paths:
                     Iterate over {$request.body#string-of-concatenated-sequence-ids}, with sequenceId = current item:
                     If (sequenceId==h*)
                       then: uuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement#core-model-1-4:equipment/contained-holder/occupying-fru}
-                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder.sequence-id}==sequenceId
+                      where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/contained-holder/equipment-augment-1-0:holder-pac/sequence-id}==sequenceId
                     else if (sequenceId==c*)
                       then:
                         uuid = equipmentUuid = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/uuid},
-                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.local-id}
-                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector.sequence-id}==sequenceId
+                        connectorLocalId = {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector/local-id}
+                          where {$RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement.response.body#core-model-1-4:equipment/connector/equipment-augment-1-0:connector-pac/sequence-id}==sequenceId
                         (equipmentUuid, connectorLocalId)-pair is to be stored temporarily in memory
                 - name: fields
                   in: query
                   required: true
                   schema:
                     type: string
-                    example: 'contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)'
+                    example: 'contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))'
                   description: >
                     'If different from empty string, a fields filter with the following value to be added to the request
                     from [/core-model-1-4:control-construct/profile-collection/profile=atlt-1-0-0-string-p-002/string-profile-1-0:string-profile-pac/string-profile-configuration/string-value]'
@@ -908,8 +917,11 @@ paths:
                                     properties:
                                       local-id:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:connector-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                                 contained-holder:
                                   type: array
                                   items:
@@ -919,21 +931,27 @@ paths:
                                         type: string
                                       occupying-fru:
                                         type: string
-                                      sequence-id:
-                                        type: integer
+                                      equipment-augment-1-0:holder-pac:
+                                        type: object
+                                        properties:
+                                          sequence-id:
+                                            type: integer
                         example:
                           core-model-1-4:equipment:
                             - uuid: '2-LIM 8xEth'
                               connector:
                                 - local-id: 'LAN-4-RJ45-Connector'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:connector-pac:
+                                    sequence-id: 1
                               contained-holder:
                                 - local-id: '2_LAN-7 SFP'
                                   occupying-fru: '2_LAN-7 SFP'
-                                  sequence-id: 1
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 1
                                 - local-id: '2_LAN-8 SFP'
                                   occupying-fru: '2_LAN-8 SFP'
-                                  sequence-id: 2
+                                  equipment-augment-1-0:holder-pac:
+                                    sequence-id: 2
                   headers:
                     x-correlator:
                       schema:
