@@ -50,10 +50,11 @@ exports.translateEquipmentSequenceIdsToLtpUuids = function(requestUrl,body,user,
     let topLevelEquipmentUUID = body['top-level-equipment-uuid'];
 
     let resultDataArray = await sequenceToUUIDTranslator.handleTranslateEquipmentSequenceIDsToLTPUUIDs(mountName, stringOfConcatenatedSequenceIDs, topLevelEquipmentUUID);
+
     if (resultDataArray["access-port-to-ltp-mappings"]) {
       resolve(resultDataArray);
     } else {
-      reject(resultDataArray);
+      reject(resultDataArray.error);
     }
   });
 }
