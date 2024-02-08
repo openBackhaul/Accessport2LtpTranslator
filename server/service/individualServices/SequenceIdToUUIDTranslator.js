@@ -4,10 +4,38 @@ const restClient = require('./RestClient');
 const logger = require('../LoggingService.js').getLogger();
 const ServiceError = require('./ServiceError.js');
 
+function validateInputSequence(stringOfConcatenatedSequenceIDs) {
+    if (stringOfConcatenatedSequenceIDs.length < 1) {
+        return ServiceError.InputValidation_ConcatenatedSequenceEmpty;
+    }
+
+    let indexLastElement = stringOfConcatenatedSequenceIDs.lastIndexOf(".");
+
+    let lastSequenceId;
+    if (indexLastElement > 0) {
+        lastSequenceId = stringOfConcatenatedSequenceIDs.substring(indexLastElement + 1);
+    } else {
+        lastSequenceId = stringOfConcatenatedSequenceIDs;
+    }
+
+    if (lastSequenceId.startsWith("c")) {
+        return undefined; //OK
+    } else {
+        return ServiceError.InputValidation_NoConnectorInConcatenatedSequence;
+    }
+}
+
 exports.handleTranslateEquipmentSequenceIDsToLTPUUIDs = async function (mountName, stringOfConcatenatedSequenceIDs, topLevelEquipmentUUID) {
 
     logger.info('translation starting with params: mountName:' + mountName + " stringOfConcatenatedSequenceIDs:" + stringOfConcatenatedSequenceIDs
         + " topLevelEquipmentUUID:" + topLevelEquipmentUUID);
+
+    let inputValidationError = validateInputSequence(stringOfConcatenatedSequenceIDs);
+
+    if (inputValidationError) {
+        logger.error("input sequence not valid");
+        return {error: inputValidationError};
+    }
 
     //1. GET ReadingUuidsOfTopLevelEquipment
     let {
@@ -168,7 +196,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
             if (inputSequenceID.startsWith("h")) {
 
                 if (holdersToQuery.length < 1) {
-                    logger.warning("no holders in result");
+                    logger.warn("no holders in result");
                     validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_NoHoldersInResult;
                     break;
                 } else {
@@ -178,16 +206,16 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                     }
 
                     for (const containedHolder of holdersToQuery) {
-                        let containedHolderSeqId = containedHolder["equipment-augment-1-0:holder-pac"]["sequence-id"];
-                        if (containedHolderSeqId) {
+                        if (containedHolder["equipment-augment-1-0:holder-pac"].hasOwnProperty("sequence-id")) {
+                            let containedHolderSeqId = containedHolder["equipment-augment-1-0:holder-pac"]["sequence-id"];
                             logger.debug("checking sequenceId " + sequenceID + " against holderSeqId " + containedHolderSeqId);
                             if (sequenceID == containedHolderSeqId) {
-                                if (containedHolder["occupying-fru"]) {
+                                if (containedHolder.hasOwnProperty("occupying-fru")) {
                                     matchingHolderUUID = containedHolder["occupying-fru"];
                                     logger.debug("found matching uuid fru: " + matchingHolderUUID);
                                     break;
                                 } else {
-                                    logger.warning("no occupying-fru for contained-holder: " + JSON.stringify(containedHolder));
+                                    logger.warn("no occupying-fru for contained-holder: " + JSON.stringify(containedHolder));
                                     validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_OccupyingFruForHolderMissing;
                                 }
                             }
@@ -200,7 +228,9 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                         nextUUID = matchingHolderUUID;
                     } else {
                         logger.info("no matching holder found");
-                        validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_HolderNotFound;
+                        if (validationErrorStep3 === undefined) {
+                            validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_HolderNotFound;
+                        }
                         break;
                     }
 
@@ -271,8 +301,8 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                         equipmentUUID = topLevelUUID;
                     }
 
-                    let duplicateSequenceIdsInHolders = checkConnectorsForDuplicateSequenceIDs(connectorsToQuery);
-                    if (duplicateSequenceIdsInHolders) {
+                    let duplicateSequenceIdsInConnectors = checkConnectorsForDuplicateSequenceIDs(connectorsToQuery);
+                    if (duplicateSequenceIdsInConnectors) {
                         logger.warn("sequenceId duplicates found in connectors");
                     }
 
@@ -280,7 +310,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
                     if (connectorsToQuery) {
                         for (const connector of connectorsToQuery) {
-                            if (connector["equipment-augment-1-0:connector-pac"]["sequence-id"]) {
+                            if (connector["equipment-augment-1-0:connector-pac"].hasOwnProperty("sequence-id")) {
                                 if (sequenceID == connector["equipment-augment-1-0:connector-pac"]["sequence-id"]) {
                                     connectorLocalID = connector["local-id"];
                                     break;
@@ -293,6 +323,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
                     if (connectorLocalID) {
                         pairResult = {equipmentUUID, connectorLocalID};
+                        logger.debug("step3 - result pair found: " + equipmentUUID + " " + connectorLocalID);
                         break;
                     } else {
                         logger.info("no matching connector found");
