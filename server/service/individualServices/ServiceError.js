@@ -1,4 +1,13 @@
 module.exports = Object.freeze({
+    InputValidation_ConcatenatedSequenceEmpty: {
+        http_status: 400,
+        message: 'input sequence invalid',
+    },
+    InputValidation_NoConnectorInConcatenatedSequence: {
+        http_status: 400,
+        message: 'no connector found in input sequence',
+    },
+
     ReadingUuidsOfTopLevelEquipment_NoResults: {
         http_status: 500,
         message: 'ReadingUuidsOfTopLevelEquipment - No top level equipment found for device',
