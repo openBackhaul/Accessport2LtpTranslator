@@ -56,10 +56,6 @@ module.exports = Object.freeze({
         http_status: 500,
         message: 'ReadingEquipmentDataInHolder - Holder found without matching occupying-fru',
     },
-    ReadingEquipmentDataInHolder_EquipmentForHolderNotFound: {
-        http_status: 500,
-        message: 'ReadingEquipmentDataInHolder - Equipment with uuid taken from occupying-fru not found',
-    },
     ReadingEquipmentDataInHolder_NoHoldersInResult: {
         http_status: 500,
         message: 'ReadingEquipmentDataInHolder - No holders available in equipment (list was empty)',

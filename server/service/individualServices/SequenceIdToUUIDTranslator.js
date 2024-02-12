@@ -267,18 +267,16 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                         // }
 
                         if (resultWrapperStep3) {
-                            if (resultWrapperStep3["core-model-1-4:equipment"].length > 0) {
+                            logger.debug("updating connectors and holders to query from " + nextUUID);
 
-                                logger.debug("updating connectors and holders to query from " + nextUUID);
-
-                                //use holder lists for next loop
-                                connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["connector"];
-                                holdersToQuery = resultWrapperStep3["core-model-1-4:equipment"][0]["contained-holder"];
-
-                            } else {
-                                logger.error("step3 request no equipment found: request for " + mountName + " and uuid " + nextUUID + " failed");
-                                validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_EquipmentForHolderNotFound;
-                                break;
+                            //use holder lists for next loop
+                            connectorsToQuery = resultWrapperStep3["core-model-1-4:equipment"]?.[0]?.["connector"];
+                            if (!connectorsToQuery) {
+                                connectorsToQuery = [];
+                            }
+                            holdersToQuery = resultWrapperStep3["core-model-1-4:equipment"]?.[0]?.["contained-holder"];
+                            if (!holdersToQuery) {
+                                holdersToQuery = [];
                             }
                         } else {
                             logger.error("step3 request not valid: request for " + mountName + " and uuid " + nextUUID + " failed");
