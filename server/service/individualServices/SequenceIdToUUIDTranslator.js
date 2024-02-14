@@ -135,12 +135,12 @@ function validateResultStep1(callResult) {
     return false;
 }
 
-function checkConnectorsForDuplicateSequenceIDs(connectorsToQuery) {
+function checkConnectorsForDuplicateSequenceIDs(connectorsToQuery, searchedSequenceID) {
     const keyOccurrences = {};
 
     for (const connector of connectorsToQuery) {
         let sequenceId = connector["equipment-augment-1-0:connector-pac"]["sequence-id"];
-        if (keyOccurrences[sequenceId]) {
+        if (keyOccurrences[sequenceId] && sequenceId == searchedSequenceID) {
             return true;
         } else {
             keyOccurrences[sequenceId] = 1;
@@ -150,12 +150,12 @@ function checkConnectorsForDuplicateSequenceIDs(connectorsToQuery) {
     return false;
 }
 
-function checkHoldersForDuplicateSequenceIDs(holdersToQuery) {
+function checkHoldersForDuplicateSequenceIDs(holdersToQuery, searchedSequenceID) {
     const keyOccurrences = {};
 
     for (const holder of holdersToQuery) {
         let sequenceId = holder["equipment-augment-1-0:holder-pac"]["sequence-id"];
-        if (keyOccurrences[sequenceId]) {
+        if (keyOccurrences[sequenceId] && sequenceId == searchedSequenceID) {
             return true;
         } else {
             keyOccurrences[sequenceId] = 1;
@@ -200,9 +200,9 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                     validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_NoHoldersInResult;
                     break;
                 } else {
-                    let duplicateSequenceIdsInHolders = checkHoldersForDuplicateSequenceIDs(holdersToQuery);
+                    let duplicateSequenceIdsInHolders = checkHoldersForDuplicateSequenceIDs(holdersToQuery, sequenceID);
                     if (duplicateSequenceIdsInHolders) {
-                        logger.error("sequenceId duplicates found in holders");
+                        logger.error("sequenceId duplicates found in holders for id " + sequenceID);
                         validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_DuplicateHolderSequenceIdsInHolder;
                         break;
                     }
@@ -301,9 +301,9 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                         equipmentUUID = topLevelUUID;
                     }
 
-                    let duplicateSequenceIdsInConnectors = checkConnectorsForDuplicateSequenceIDs(connectorsToQuery);
+                    let duplicateSequenceIdsInConnectors = checkConnectorsForDuplicateSequenceIDs(connectorsToQuery, sequenceID);
                     if (duplicateSequenceIdsInConnectors) {
-                        logger.error("sequenceId duplicates found in connectors");
+                        logger.error("sequenceId duplicates found in connectors for id " + sequenceID);
                         validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_DuplicateConnectorSequenceIdsInHolder;
                         break;
                     }
