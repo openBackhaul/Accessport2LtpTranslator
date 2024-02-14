@@ -202,7 +202,9 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                 } else {
                     let duplicateSequenceIdsInHolders = checkHoldersForDuplicateSequenceIDs(holdersToQuery);
                     if (duplicateSequenceIdsInHolders) {
-                        logger.warn("sequenceId duplicates found in holders");
+                        logger.error("sequenceId duplicates found in holders");
+                        validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_DuplicateHolderSequenceIdsInHolder;
+                        break;
                     }
 
                     for (const containedHolder of holdersToQuery) {
@@ -301,7 +303,9 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
 
                     let duplicateSequenceIdsInConnectors = checkConnectorsForDuplicateSequenceIDs(connectorsToQuery);
                     if (duplicateSequenceIdsInConnectors) {
-                        logger.warn("sequenceId duplicates found in connectors");
+                        logger.error("sequenceId duplicates found in connectors");
+                        validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_DuplicateConnectorSequenceIdsInHolder;
+                        break;
                     }
 
                     let connectorLocalID = undefined;
