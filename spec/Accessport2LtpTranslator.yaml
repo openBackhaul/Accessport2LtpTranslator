@@ -2916,6 +2916,120 @@ paths:
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
       callbacks:
+        OamRequestCausesInquiryForAuthentication:
+          url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-0-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-0-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-0-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-0-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-op-c-bs-aa-2-0-1-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            post:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      required:
+                        - application-name
+                        - release-number
+                        - Authorization
+                        - method
+                      properties:
+                        application-name:
+                          type: string
+                          description: >
+                            'Own application name for the AccessAdministration to check, whether this application is part of the SDN at all
+                            from [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                        release-number:
+                          type: string
+                          description: >
+                            'Own application release number for the AccessAdministration to check, whether this application is part of the SDN at all
+                            from [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                        Authorization:
+                          type: string
+                          description: >
+                            'Authorization code of the administrator addressing the OaM request to this application from [parameters::Authorization]'
+                        method:
+                          type: string
+                          description: 'Method applied in the OaM request, which is to be recorded'
+                      example:
+                        application-name: 'OwnApplicationName'
+                        release-number: '1.0.0'
+                        Authorization: 'Basic PEJhc2ljIEF1dGggVXNlcm5hbWU+OjxCYHduEdBBdXRoIFBhc3N3b3JkPg=='
+                        method: 'PUT'
+              responses:
+                '200':
+                  description: 'Response on inquiry for approval of an OaM request provided'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - oam-request-is-approved
+                        properties:
+                          oam-request-is-approved:
+                            type: boolean
+                          reason-of-objection:
+                            type: string
+                            enum:
+                              - 'APPLICATION_NAME_UNKNOWN'
+                              - 'RELEASE_NUMBER_UNKNOWN'
+                              - 'AUTHORIZATION_CODE_UNKNOWN'
+                              - 'METHOD_NOT_ALLOWED'
+                              - 'UNKNOWN'
+                            description: >
+                              'This attribute to be represented, if response::oam-request-is-approved==false.
+                              Reasons to be checked and indicated according to the sequence defined in the enumeration.'
+                      examples:
+                        True:
+                          value:
+                            oam-request-is-approved: true
+                        False:
+                          value:
+                            oam-request-is-approved: false
+                            reason-of-objection: 'AUTHORIZATION_CODE_UNKNOWN'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
         BasicAuthRequestCausesInquiryForAuthentication:
           url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-1-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-1-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-1-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-tcp-c-aa-2-1-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-0-op-c-bs-aa-2-1-0-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             post:

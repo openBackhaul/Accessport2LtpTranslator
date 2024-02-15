@@ -130,6 +130,23 @@ forwardings:
       - client-name: AdministratorAdministration://v1/approve-oam-request
         uuid: atlt-1-0-0-op-c-bs-aa-2-1-0-000
 
+  - forwarding-name: OamRequestCausesInquiryForAuthentication
+    uuid: atlt-1-0-0-op-fc-bm-004
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+        - server-name: /v1/inquire-oam-request-approvals
+          uuid: atlt-1-0-0-op-s-bm-005
+      fc-port-update:
+        - server-name: /v1/inquire-oam-request-approvals
+          uuid: atlt-1-0-0-op-s-bm-005
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+    consequent-requests:
+      - client-name: AccessAdministration://v1/approve-oam-request
+        uuid: atlt-1-0-0-op-c-bs-aa-2-0-1-000
+
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
     uuid: atlt-1-0-0-op-fc-bm-105
     forwarding-type: InvariantProcessSnippet
