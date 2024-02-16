@@ -1,26 +1,26 @@
 forwardings:
 
   - forwarding-name: PromptForRegisteringCausesRegistrationRequest
-    uuid: a2lt-1-0-0-op-fc-bm-000
+    uuid: atlt-1-0-0-op-fc-bm-000
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/register-yourself
-          uuid: a2lt-1-0-0-op-s-bm-000
+          uuid: atlt-1-0-0-op-s-bm-000
       fc-port-update:
         - server-name: /v1/register-yourself
-          uuid: a2lt-1-0-0-op-s-bm-000
+          uuid: atlt-1-0-0-op-s-bm-000
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/register-yourself
-        uuid: a2lt-1-0-0-op-s-bm-000
+        uuid: atlt-1-0-0-op-s-bm-000
     consequent-requests:
       - client-name: RegistryOffice://v2/register-application
-        uuid: a2lt-1-0-0-op-c-bm-ro-2-1-0-000
+        uuid: atlt-1-0-0-op-c-bm-ro-2-1-0-000
 
   - forwarding-name: PromptForEmbeddingCausesRequestForBequeathingData
-    uuid: a2lt-1-0-0-op-fc-bm-001
+    uuid: atlt-1-0-0-op-fc-bm-001
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -29,360 +29,377 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/embed-yourself
-        uuid: a2lt-1-0-0-op-s-bm-001
+        uuid: atlt-1-0-0-op-s-bm-001
     consequent-requests:
       - client-name: OldRelease://v1/bequeath-your-data-and-die
-        uuid: a2lt-1-0-0-op-c-bm-or-1-0-0-000
+        uuid: atlt-1-0-0-op-c-bm-or-1-0-0-000
 
   - forwarding-name: ServiceRequestCausesLoggingRequest
-    uuid: a2lt-1-0-0-op-fc-bm-002
+    uuid: atlt-1-0-0-op-fc-bm-002
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-service-request-information
-          uuid: a2lt-1-0-0-op-s-bm-002
+          uuid: atlt-1-0-0-op-s-bm-002
       fc-port-update:
         - server-name: /v1/redirect-service-request-information
-          uuid: a2lt-1-0-0-op-s-bm-002
+          uuid: atlt-1-0-0-op-s-bm-002
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/register-yourself
-        uuid: a2lt-1-0-0-op-s-bm-000
+        uuid: atlt-1-0-0-op-s-bm-000
       - server-name: /v1/embed-yourself
-        uuid: a2lt-1-0-0-op-s-bm-001
+        uuid: atlt-1-0-0-op-s-bm-001
       - server-name: /v1/redirect-service-request-information
-        uuid: a2lt-1-0-0-op-s-bm-002
+        uuid: atlt-1-0-0-op-s-bm-002
       - server-name: /v1/redirect-oam-request-information
-        uuid: a2lt-1-0-0-op-s-bm-003
+        uuid: atlt-1-0-0-op-s-bm-003
       - server-name: /v1/end-subscription
-        uuid: a2lt-1-0-0-op-s-bm-004
+        uuid: atlt-1-0-0-op-s-bm-004
       - server-name: /v1/inquire-oam-request-approvals
-        uuid: a2lt-1-0-0-op-s-bm-005
+        uuid: atlt-1-0-0-op-s-bm-005
       - server-name: /v1/update-client
-        uuid: a2lt-1-0-0-op-s-bm-007
+        uuid: atlt-1-0-0-op-s-bm-007
       - server-name: /v1/list-ltps-and-fcs
-        uuid: a2lt-1-0-0-op-s-bm-008
+        uuid: atlt-1-0-0-op-s-bm-008
       - server-name: /v1/redirect-topology-change-information
-        uuid: a2lt-1-0-0-op-s-bm-009
+        uuid: atlt-1-0-0-op-s-bm-009
       - server-name: /v1/update-operation-key
-        uuid: a2lt-1-0-0-op-s-bm-010
+        uuid: atlt-1-0-0-op-s-bm-010
       - server-name: /v1/update-operation-client
-        uuid: a2lt-1-0-0-op-s-bm-011
+        uuid: atlt-1-0-0-op-s-bm-011
       - server-name: /v1/inquire-basic-auth-approvals
-        uuid: a2lt-1-0-0-op-s-bm-012
+        uuid: atlt-1-0-0-op-s-bm-012
       - server-name: /v1/bequeath-your-data-and-die
-        uuid: a2lt-1-0-0-op-s-im-000
+        uuid: atlt-1-0-0-op-s-im-000
       - server-name: /v1/start-application-in-generic-representation
-        uuid: a2lt-1-0-0-op-s-bs-000
+        uuid: atlt-1-0-0-op-s-bs-000
       - server-name: /v1/inform-about-application
-        uuid: a2lt-1-0-0-op-s-bs-001
+        uuid: atlt-1-0-0-op-s-bs-001
       - server-name: /v1/inform-about-application-in-generic-representation
-        uuid: a2lt-1-0-0-op-s-bs-002
+        uuid: atlt-1-0-0-op-s-bs-002
       - server-name: /v1/inform-about-release-history
-        uuid: a2lt-1-0-0-op-s-bs-003
+        uuid: atlt-1-0-0-op-s-bs-003
       - server-name: /v1/inform-about-release-history-in-generic-representation
-        uuid: a2lt-1-0-0-op-s-bs-004
+        uuid: atlt-1-0-0-op-s-bs-004
       - server-name: /docs
-        uuid: a2lt-1-0-0-op-s-bs-005
+        uuid: atlt-1-0-0-op-s-bs-005
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: EATL://v1/record-service-request
-        uuid: a2lt-1-0-0-op-c-bs-eatl-2-0-1-000
+        uuid: atlt-1-0-0-op-c-bs-eatl-2-0-1-000
 
   - forwarding-name: OamRequestCausesLoggingRequest
-    uuid: a2lt-1-0-0-op-fc-bm-003
+    uuid: atlt-1-0-0-op-fc-bm-003
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-oam-request-information
-          uuid: a2lt-1-0-0-op-s-bm-003
+          uuid: atlt-1-0-0-op-s-bm-003
       fc-port-update:
         - server-name: /v1/redirect-oam-request-information
-          uuid: a2lt-1-0-0-op-s-bm-003
+          uuid: atlt-1-0-0-op-s-bm-003
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: OamLog://v1/record-oam-request
-        uuid: a2lt-1-0-0-op-c-bs-ol-2-0-1-000
+        uuid: atlt-1-0-0-op-c-bs-ol-2-0-1-000
 
   - forwarding-name: BasicAuthRequestCausesInquiryForAuthentication
-    uuid: a2lt-1-0-0-op-fc-bm-005
+    uuid: atlt-1-0-0-op-fc-bm-005
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/inquire-basic-auth-approvals
-          uuid: a2lt-1-0-0-op-s-bm-012
+          uuid: atlt-1-0-0-op-s-bm-012
         - server-name: /v1/inquire-oam-request-approvals
-          uuid: a2lt-1-0-0-op-s-bm-005
+          uuid: atlt-1-0-0-op-s-bm-005
       fc-port-update:
         - server-name: /v1/inquire-basic-auth-approvals
-          uuid: a2lt-1-0-0-op-s-bm-012
+          uuid: atlt-1-0-0-op-s-bm-012
         - server-name: /v1/inquire-oam-request-approvals
-          uuid: a2lt-1-0-0-op-s-bm-005
+          uuid: atlt-1-0-0-op-s-bm-005
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       # [all oam requests]
     consequent-requests:
       - client-name: AdministratorAdministration://v1/approve-oam-request
-        uuid: a2lt-1-0-0-op-c-bs-aa-2-1-0-000
+        uuid: atlt-1-0-0-op-c-bs-aa-2-1-0-000
+
+  - forwarding-name: OamRequestCausesInquiryForAuthentication
+    uuid: atlt-1-0-0-op-fc-bm-004
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+        - server-name: /v1/inquire-oam-request-approvals
+          uuid: atlt-1-0-0-op-s-bm-005
+      fc-port-update:
+        - server-name: /v1/inquire-oam-request-approvals
+          uuid: atlt-1-0-0-op-s-bm-005
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+    consequent-requests:
+      - client-name: AccessAdministration://v1/approve-oam-request
+        uuid: atlt-1-0-0-op-c-bs-aa-2-0-1-000
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
-    uuid: a2lt-1-0-0-op-fc-bm-105
+    uuid: atlt-1-0-0-op-fc-bm-105
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/bequeath-your-data-and-die
-        uuid: a2lt-1-0-0-op-s-im-000
+        uuid: atlt-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-server-replacement
-        uuid: a2lt-1-0-0-op-c-bm-ro-2-0-1-001
+        uuid: atlt-1-0-0-op-c-bm-ro-2-0-1-001
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease
-    uuid: a2lt-1-0-0-op-fc-bm-106
+    uuid: atlt-1-0-0-op-fc-bm-106
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/bequeath-your-data-and-die
-        uuid: a2lt-1-0-0-op-s-im-000
+        uuid: atlt-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/deregister-application
-        uuid: a2lt-1-0-0-op-c-bm-ro-2-0-1-002
+        uuid: atlt-1-0-0-op-c-bm-ro-2-0-1-002
 
   - forwarding-name: PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation
-    uuid: a2lt-1-0-0-op-fc-bm-107
+    uuid: atlt-1-0-0-op-fc-bm-107
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-update:
         - server-name: /v1/embed-yourself
-          uuid: a2lt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-0-op-s-bm-001
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/update-client
-        uuid: a2lt-1-0-0-op-s-bm-007
+        uuid: atlt-1-0-0-op-s-bm-007
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-operation-update
-        uuid: a2lt-1-0-0-op-c-bm-ro-2-0-1-003
+        uuid: atlt-1-0-0-op-c-bm-ro-2-0-1-003
 
   - forwarding-name: ServiceRequestCausesLtpUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-006
+    uuid: atlt-1-0-0-op-fc-bm-006
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/register-yourself
-        uuid: a2lt-1-0-0-op-s-bm-000
+        uuid: atlt-1-0-0-op-s-bm-000
       - server-name: /v1/embed-yourself
-        uuid: a2lt-1-0-0-op-s-bm-001
+        uuid: atlt-1-0-0-op-s-bm-001
       - server-name: /v1/redirect-service-request-information
-        uuid: a2lt-1-0-0-op-s-bm-002
+        uuid: atlt-1-0-0-op-s-bm-002
       - server-name: /v1/redirect-oam-request-information
-        uuid: a2lt-1-0-0-op-s-bm-003
+        uuid: atlt-1-0-0-op-s-bm-003
       - server-name: /v1/inquire-oam-request-approvals
-        uuid: a2lt-1-0-0-op-s-bm-005
+        uuid: atlt-1-0-0-op-s-bm-005
       - server-name: /v1/update-client
-        uuid: a2lt-1-0-0-op-s-bm-007
+        uuid: atlt-1-0-0-op-s-bm-007
       - server-name: /v1/redirect-topology-change-information
-        uuid: a2lt-1-0-0-op-s-bm-009
+        uuid: atlt-1-0-0-op-s-bm-009
       - server-name: /v1/update-operation-client
-        uuid: a2lt-1-0-0-op-s-bm-011
+        uuid: atlt-1-0-0-op-s-bm-011
       - server-name: /v1/inquire-basic-auth-approvals
-        uuid: a2lt-1-0-0-op-s-bm-012
+        uuid: atlt-1-0-0-op-s-bm-012
       - server-name: /v1/bequeath-your-data-and-die
-        uuid: a2lt-1-0-0-op-s-im-000
+        uuid: atlt-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-001
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-001
 
   - forwarding-name: ServiceRequestCausesLtpDeletionRequest
-    uuid: a2lt-1-0-0-op-fc-bm-007
+    uuid: atlt-1-0-0-op-fc-bm-007
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/dispose-remainders-of-deregistered-application
-        uuid: a2lt-1-0-0-op-s-bm-013
+        uuid: atlt-1-0-0-op-s-bm-013
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-002
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-002
 
   - forwarding-name: ServiceRequestCausesFcUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-008
+    uuid: atlt-1-0-0-op-fc-bm-008
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-003
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-003
 
   - forwarding-name: ServiceRequestCausesFcPortUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-009
+    uuid: atlt-1-0-0-op-fc-bm-009
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-004
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-004
 
   - forwarding-name: ServiceRequestCausesFcPortDeletionRequest
-    uuid: a2lt-1-0-0-op-fc-bm-010
+    uuid: atlt-1-0-0-op-fc-bm-010
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/end-subscription
-        uuid: a2lt-1-0-0-op-s-bm-004
+        uuid: atlt-1-0-0-op-s-bm-004
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-005
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-005
 
   - forwarding-name: OamRequestCausesLtpUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-011
+    uuid: atlt-1-0-0-op-fc-bm-011
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-001
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-001
 
   - forwarding-name: OamRequestCausesLtpDeletionRequest
-    uuid: a2lt-1-0-0-op-fc-bm-012
+    uuid: atlt-1-0-0-op-fc-bm-012
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-002
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-002
 
   - forwarding-name: OamRequestCausesFcUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-013
+    uuid: atlt-1-0-0-op-fc-bm-013
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-003
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-003
 
   - forwarding-name: OamRequestCausesFcPortUpdateRequest
-    uuid: a2lt-1-0-0-op-fc-bm-014
+    uuid: atlt-1-0-0-op-fc-bm-014
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-004
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-004
 
   - forwarding-name: OamRequestCausesFcPortDeletionRequest
-    uuid: a2lt-1-0-0-op-fc-bm-015
+    uuid: atlt-1-0-0-op-fc-bm-015
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-update:
         - server-name: /v1/redirect-topology-change-information
-          uuid: a2lt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-0-op-s-bm-009
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: a2lt-1-0-0-op-c-bm-alt-2-0-1-005
+        uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-005
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingUuidsOfTopLevelEquipment
-    uuid: a2lt-1-0-0-op-fc-is-000
+    uuid: atlt-1-0-0-op-fc-is-000
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -391,13 +408,13 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=top-level-equipment
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-000
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-000
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataOfTopLevelElement
-    uuid: a2lt-1-0-0-op-fc-is-001
+    uuid: atlt-1-0-0-op-fc-is-001
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -406,13 +423,13 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder;connector
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-001
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-001
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingEquipmentDataInHolder
-    uuid: a2lt-1-0-0-op-fc-is-002
+    uuid: atlt-1-0-0-op-fc-is-002
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -421,13 +438,13 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder;connector
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-001
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-001
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingAugmentOfAllLtps
-    uuid: a2lt-1-0-0-op-fc-is-003
+    uuid: atlt-1-0-0-op-fc-is-003
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -436,13 +453,13 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-000
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-000
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingServingLtp
-    uuid: a2lt-1-0-0-op-fc-is-004
+    uuid: atlt-1-0-0-op-fc-is-004
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -451,13 +468,13 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-002
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-002
 
   - forwarding-name: RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData.ReadingClientLtp
-    uuid: a2lt-1-0-0-op-fc-is-005
+    uuid: atlt-1-0-0-op-fc-is-005
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -466,7 +483,7 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-        uuid: a2lt-1-0-0-op-s-is-000
+        uuid: atlt-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)
-        uuid: a2lt-1-0-0-op-c-is-mwdi-1-1-1-002
+        uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-002

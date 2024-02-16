@@ -4,11 +4,11 @@ skinparam responseMessageBelowArrow true
 title RequestForTranslatingEquipmentSequenceIdsCausesReadingDeviceData
 
 participant "external" as external
-participant "A2LT://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
+participant "atlt://v1/translate-equipment-sequence-ids-to-ltp-uuids" as offeredService
 participant "MWDI://...control-construct?fields=top-level-equipment" as topLevel
   ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=top-level-equipment" as topLevel
-participant "MWDI://.../equipment={uuid}?fields=contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)" as equipment
-  ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;sequence-id);connector(local-id;sequence-id)" as equipment
+participant "MWDI://.../equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))" as equipment
+  ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))" as equipment
 participant "MWDI://...control-construct?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))" as ltpList
   ' complete path: participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))" as ltpList
 participant "MWDI://...control-construct/logical-termination-point={uuid}?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)" as clientLtp
@@ -46,12 +46,12 @@ group Repeat for each sequenceId in stringOfConcatenatedSequenceIds
     Store all seen equipmentUuid, connectorLocalId pairs temporarly in memory for usage in subsequent steps
 
     IF (sequenceId == h*)
-      THEN nextUuid = containedHolder.occupying-fru of holder instance with containedHolder.sequence-id == sequenceId
+      THEN nextUuid = containedHolder.occupying-fru of holder instance with containedHolder.equipment-augment-1-0:holder-pac.sequence-id == sequenceId
 
     IF (sequenceId == c*)
       THEN
         equipmentUuid = nextUuid
-        connectorLocalId = connector.local-id connector instance with connector.sequence-id == sequenceId
+        connectorLocalId = connector.local-id connector instance with connector.equipment-augment-1-0:connector-pac.sequence-id == sequenceId
         <i>(store this equipmentUuid, connectorLocalId pair in memory)</i>
 
     <u> ReadingEquipmentDataInHolder </u>
