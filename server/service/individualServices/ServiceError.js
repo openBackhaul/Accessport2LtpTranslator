@@ -52,6 +52,10 @@ module.exports = Object.freeze({
         http_status: 500,
         message: 'ReadingEquipmentDataInHolder - Found duplicate for searched connector sequence id in holder',
     },
+    ReadingEquipmentDataInHolder_InvalidSequenceId: {
+        http_status: 500,
+        message: 'ReadingEquipmentDataInHolder - Found invalid sequence id',
+    },
     ReadingEquipmentDataInHolder_HolderNotFound: {
         http_status: 500,
         message: 'ReadingEquipmentDataInHolder - Holder sequence id not found in contained-holders',
