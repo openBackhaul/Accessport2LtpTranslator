@@ -3,7 +3,8 @@
 In order to compare planning data and system settings as well as performance data, it should be possible to establish standardised relationships between the SDN models and current planning tools.  
 Therefore the attribute sequenceID should be used.  
 Each object (connector and contained-holder) beneath an common equipment object should have a unique sequenceId.  
-Accessport2LtpTranslator is translating the given sequenceId values (for instance from a legacy tool like x:akta or APT) into the UUID of an LTP.  
+Accessport2LtpTranslator is translating the given sequenceId values (for instance from a legacy tool like x:akta or APT) into the UUID of an LTP.
+
 The relevant data is collected on demand when the requestor is calling the /v1/translate-equipment-sequence-ids-to-ltp-uuids.  
 The input parameters should be handed over via request body.  
 The data is retrieved from the MicrowaveDeviceInventory from cache.  
