@@ -1,6 +1,25 @@
 forwardings:
 
   - forwarding-name: PromptForRegisteringCausesRegistrationRequest
+    uuid: atlt-1-0-2-op-fc-bm-999
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+        - server-name: /v1/register-yourself
+          uuid: atlt-1-0-2-op-s-bm-000
+      fc-port-update:
+        - server-name: /v1/register-yourself
+          uuid: atlt-1-0-2-op-s-bm-000
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/register-yourself
+        uuid: atlt-1-0-2-op-s-bm-000
+    consequent-requests:
+      - client-name: RegistryOffice://v2/register-application
+        uuid: atlt-1-0-2-op-c-bm-ro-2-1-2-000
+
+  - forwarding-name: PromptForRegisteringCausesRegistrationRequest2
     uuid: atlt-1-0-2-op-fc-bm-000
     forwarding-type: InvariantProcessSnippet
     management-requests:
@@ -71,6 +90,12 @@ forwardings:
         uuid: atlt-1-0-2-op-s-bm-011
       - server-name: /v1/inquire-basic-auth-approvals
         uuid: atlt-1-0-2-op-s-bm-012
+      - server-name: /v1/dispose-remainders-of-deregistered-application
+        uuid: atlt-1-0-2-op-s-bm-013
+      - server-name: /v1/inform-about-preceding-release
+        uuid: atlt-1-0-2-op-s-bm-014
+      - server-name: /v1/update-client-of-subsequent-release
+        uuid: atlt-1-0-2-op-s-bm-015
       - server-name: /v1/bequeath-your-data-and-die
         uuid: atlt-1-0-2-op-s-im-000
       - server-name: /v1/start-application-in-generic-representation
@@ -235,6 +260,8 @@ forwardings:
         uuid: atlt-1-0-2-op-s-bm-011
       - server-name: /v1/inquire-basic-auth-approvals
         uuid: atlt-1-0-2-op-s-bm-012
+      - server-name: /v1/update-client-of-subsequent-release
+        uuid: atlt-1-0-2-op-s-bm-015
       - server-name: /v1/bequeath-your-data-and-die
         uuid: atlt-1-0-2-op-s-im-000
     consequent-requests:
