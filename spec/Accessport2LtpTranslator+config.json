@@ -868,7 +868,7 @@
             "http-server-interface-1-0:http-server-interface-pac": {
               "http-server-interface-capability": {
                 "application-name": "Accessport2LtpTranslator",
-                "release-number": "1.0.0",
+                "release-number": "1.0.2",
                 "application-purpose": "Accessport2LtpTranslator is translating given sequenceId values (for instance from a legacy tool like x:akta or APT) into the UUIDs of LTPs.",
                 "data-update-period": "http-server-interface-1-0:DATA_UPDATE_PERIOD_TYPE_REAL_TIME",
                 "owner-name": "Thomas Seitz",
@@ -879,6 +879,18 @@
                     "release-number": "1.0.0",
                     "release-date": "08.12.2023",
                     "changes": "Initial version"
+                  },
+                  {
+                    "local-id": "1",
+                    "release-number": "1.0.1",
+                    "release-date": "16.02.2024",
+                    "changes": "Fixed findings from v1.0.0"
+                  },
+                  {
+                    "local-id": "2",
+                    "release-number": "1.0.2",
+                    "release-date": "29.10.2024",
+                    "changes": "Update to appPattern v2.1.2"
                   }
                 ]
               }
@@ -1830,7 +1842,7 @@
         "uuid": "atlt-1-0-2-op-fd-000",
         "forwarding-construct": [
           {
-            "uuid": "atlt-1-0-2-op-fc-bm-000",
+            "uuid": "atlt-1-0-2-op-fc-bm-999",
             "name": [
               {
                 "value-name": "ForwardingKind",
@@ -1855,7 +1867,37 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "atlt-1-0-2-op-c-bm-ro-2-1-2-000"
+                "logical-termination-point": "atlt-1-0-2-op-c-bm-ro-2-1-0-000"
+              }
+            ]
+          },
+          {
+            "uuid": "atlt-1-0-2-op-fc-bm-000",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForRegisteringCausesRegistrationRequest2"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "000",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-000"
+              },
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-000"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "atlt-1-0-2-op-c-bm-ro-2-1-0-000"
               }
             ]
           },
@@ -1961,6 +2003,21 @@
                 "local-id": "112",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "atlt-1-0-2-op-s-bm-012"
+              },
+              {
+                "local-id": "113",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-013"
+              },
+              {
+                "local-id": "114",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-014"
+              },
+              {
+                "local-id": "115",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-015"
               },
               {
                 "local-id": "130",
@@ -2241,6 +2298,11 @@
                 "local-id": "112",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "atlt-1-0-2-op-s-bm-012"
+              },
+              {
+                "local-id": "115",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "atlt-1-0-2-op-s-bm-015"
               },
               {
                 "local-id": "130",
