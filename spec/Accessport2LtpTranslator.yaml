@@ -7012,7 +7012,7 @@ paths:
                 properties:
                   action-profile-1-0:consequent-operation-reference:
                     type: string
-                    example: '/core-model-1-4:control-construct/logical-termination-point=ro-1-0-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
+                    example: '/core-model-1-4:control-construct/logical-termination-point=ro-2-1-2-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
         '400':
           $ref: '#/components/responses/responseForErroredOamRequests'
         '401':
