@@ -1399,19 +1399,19 @@ paths:
                       minLength: 3
                       description: >
                         'If body provided, name of RegistryOffice application
-                        find [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+                        find [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
                     registry-office-application-release-number:
                       type: string
                       pattern: '^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})$'
                       description: >
                         'If body provided, release of RegistryOffice application
-                        find or update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+                        find or update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
                     registration-operation:
                       type: string
                       minLength: 6
                       description: >
                         'If body provided, operation for registering
-                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
                     registry-office-protocol:
                       type: string
                       enum:
@@ -1419,7 +1419,7 @@ paths:
                         - 'HTTPS'
                       description: >
                         'If body provided, protocol for addressing the RegistryOffice application
-                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
                     registry-office-address:
                       type: object
                       minProperties: 1
@@ -1436,20 +1436,20 @@ paths:
                               pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
                               description: >
                                 'If body provided, IPv4 address of RegistryOffice application
-                                update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+                                update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
                         domain-name:
                           type: string
                           pattern: '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$'
                           description: >
                             'If body provided, domain name of RegistryOffice application
-                            update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+                            update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
                     registry-office-port:
                       type: integer
                       minimum: 0
                       maximum: 65535
                       description: >
                         'If body provided, port of RegistryOffice application
-                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
                     http-address:
                       type: object
                       minProperties: 1
@@ -1555,7 +1555,7 @@ paths:
           $ref: '#/components/responses/responseForErroredServiceRequests'
       callbacks:
         PromptForRegisteringCausesRegistrationRequest2:
-          url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://{[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]}:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+          url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://{[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]}:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             description: >
               'Starting from RO v2.1.0, PromptForRegisteringCausesRegistrationRequest2 shall be executed first, only if HTTP response code different from 204 PromptForRegisteringCausesRegistrationRequest shall be executed, too.'
             post:
@@ -1705,7 +1705,7 @@ paths:
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
         PromptForRegisteringCausesRegistrationRequest:
-          url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://{[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]}:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+          url: #[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://{[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address or /core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]}:[/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-op-c-bm-ro-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
             description: >
               'DEPRECATED - Callback shall be deleted with RO v3.0.0'
             post:
@@ -1876,13 +1876,13 @@ paths:
                   type: string
                   description: >
                     'Name of RegistryOffice application
-                    find [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+                    find [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
                 registry-office-application-release-number:
                   type: string
                   pattern: '^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})$'
                   description: >
                     'Release of RegistryOffice application
-                    find or update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+                    find or update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
                 relay-server-replacement-operation:
                   type: string
                   minLength: 6
@@ -1908,7 +1908,7 @@ paths:
                     - 'HTTPS'
                   description: >
                     'Protocol for addressing RegistryOffice application
-                    update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+                    update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
                 registry-office-address:
                   type: object
                   minProperties: 1
@@ -1925,20 +1925,20 @@ paths:
                           pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
                           description: >
                             'IPv4 address of RegistryOffice application
-                            update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+                            update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
                     domain-name:
                       type: string
                       pattern: '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$'
                       description: >
                         'Domain name of RegistryOffice application
-                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+                        update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
                 registry-office-port:
                   type: integer
                   minimum: 0
                   maximum: 65535
                   description: >
                     'Port of RegistryOffice application
-                    update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+                    update [/core-model-1-4:control-construct/logical-termination-point=atlt-1-0-2-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
                 old-release-protocol:
                   type: string
                   enum:
