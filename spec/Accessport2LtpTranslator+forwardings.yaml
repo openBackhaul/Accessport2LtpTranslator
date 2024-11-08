@@ -152,7 +152,7 @@ forwardings:
     initiating-requests:
       # [all oam requests]
     consequent-requests:
-      - client-name: AdministratorAdministration://v1/approve-oam-request
+      - client-name: AccessAdministration:://v1/approve-basic-auth-request
         uuid: atlt-1-0-2-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: OamRequestCausesInquiryForAuthentication
