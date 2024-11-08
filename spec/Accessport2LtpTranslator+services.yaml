@@ -4,83 +4,83 @@ servers:
     own-oam:
       basic:
         - operation-name: /v1/register-yourself
-          uuid: atlt-1-0-0-op-s-bm-000
+          uuid: atlt-1-0-2-op-s-bm-000
         - operation-name: /v1/embed-yourself
-          uuid: atlt-1-0-0-op-s-bm-001
+          uuid: atlt-1-0-2-op-s-bm-001
         - operation-name: /v1/redirect-service-request-information
-          uuid: atlt-1-0-0-op-s-bm-002
+          uuid: atlt-1-0-2-op-s-bm-002
         - operation-name: /v1/redirect-oam-request-information
-          uuid: atlt-1-0-0-op-s-bm-003
+          uuid: atlt-1-0-2-op-s-bm-003
         - operation-name: /v1/end-subscription
-          uuid: atlt-1-0-0-op-s-bm-004
+          uuid: atlt-1-0-2-op-s-bm-004
         - operation-name: /v1/inquire-oam-request-approvals
-          uuid: atlt-1-0-0-op-s-bm-005
+          uuid: atlt-1-0-2-op-s-bm-005
         - operation-name: /v1/update-client
-          uuid: atlt-1-0-0-op-s-bm-007
+          uuid: atlt-1-0-2-op-s-bm-007
         - operation-name: /v1/list-ltps-and-fcs
-          uuid: atlt-1-0-0-op-s-bm-008
+          uuid: atlt-1-0-2-op-s-bm-008
         - operation-name: /v1/redirect-topology-change-information
-          uuid: atlt-1-0-0-op-s-bm-009
+          uuid: atlt-1-0-2-op-s-bm-009
         - operation-name: /v1/update-operation-key
-          uuid: atlt-1-0-0-op-s-bm-010
+          uuid: atlt-1-0-2-op-s-bm-010
         - operation-name: /v1/update-operation-client
-          uuid: atlt-1-0-0-op-s-bm-011
+          uuid: atlt-1-0-2-op-s-bm-011
         - operation-name: /v1/inquire-basic-auth-approvals
-          uuid: atlt-1-0-0-op-s-bm-012
+          uuid: atlt-1-0-2-op-s-bm-012
         - operation-name: /v1/dispose-remainders-of-deregistered-application
-          uuid: atlt-1-0-0-op-s-bm-013
+          uuid: atlt-1-0-2-op-s-bm-013
         - operation-name: /v1/inform-about-preceding-release
-          uuid: atlt-1-0-0-op-s-bm-014
+          uuid: atlt-1-0-2-op-s-bm-014
         - operation-name: /v1/update-client-of-subsequent-release
-          uuid: atlt-1-0-0-op-s-bm-015
+          uuid: atlt-1-0-2-op-s-bm-015
       individual:
         - operation-name: /v1/bequeath-your-data-and-die
-          uuid: atlt-1-0-0-op-s-im-000
+          uuid: atlt-1-0-2-op-s-im-000
     service:
       basic:
         - operation-name: /v1/start-application-in-generic-representation
-          uuid: atlt-1-0-0-op-s-bs-000
+          uuid: atlt-1-0-2-op-s-bs-000
         - operation-name: /v1/inform-about-application
-          uuid: atlt-1-0-0-op-s-bs-001
+          uuid: atlt-1-0-2-op-s-bs-001
         - operation-name: /v1/inform-about-application-in-generic-representation
-          uuid: atlt-1-0-0-op-s-bs-002
+          uuid: atlt-1-0-2-op-s-bs-002
         - operation-name: /v1/inform-about-release-history
-          uuid: atlt-1-0-0-op-s-bs-003
+          uuid: atlt-1-0-2-op-s-bs-003
         - operation-name: /v1/inform-about-release-history-in-generic-representation
-          uuid: atlt-1-0-0-op-s-bs-004
+          uuid: atlt-1-0-2-op-s-bs-004
         - operation-name: /docs
-          uuid: atlt-1-0-0-op-s-bs-005
+          uuid: atlt-1-0-2-op-s-bs-005
       individual:
         - operation-name: /v1/translate-equipment-sequence-ids-to-ltp-uuids
-          uuid: atlt-1-0-0-op-s-is-000
+          uuid: atlt-1-0-2-op-s-is-000
   http-server:
     own-application-name: Accessport2LtpTranslator
-    own-release-number: 1.0.0
-    uuid: atlt-1-0-0-http-s-000
+    own-release-number: 1.0.2
+    uuid: atlt-1-0-2-http-s-000
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
       own-ip-address: 127.0.0.1
       own-tcp-port: 4003
-      uuid: atlt-1-0-0-tcp-s-000
+      uuid: atlt-1-0-2-tcp-s-000
 
 
 clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: 1.0.0
-      uuid: atlt-1-0-0-http-c-or-1-0-0-000
+      release-number: 1.0.1
+      uuid: atlt-1-0-2-http-c-or-1-0-1-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4003
-      uuid: atlt-1-0-0-tcp-c-or-1-0-0-000
+      uuid: atlt-1-0-2-tcp-c-or-1-0-1-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/bequeath-your-data-and-die
-            uuid: atlt-1-0-0-op-c-bm-or-1-0-0-000
+            uuid: atlt-1-0-2-op-c-bm-or-1-0-1-000
         individual:
       service:
         basic:
@@ -88,13 +88,13 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: 1.0.0
-      uuid: atlt-1-0-0-http-c-nr-1-0-0-000
+      release-number: 1.0.2
+      uuid: atlt-1-0-2-http-c-nr-1-0-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4003
-      uuid: atlt-1-0-0-tcp-c-nr-1-0-0-000
+      uuid: atlt-1-0-2-tcp-c-nr-1-0-2-000
     operation-clients:
       own-oam:
         basic:
@@ -105,24 +105,24 @@ clients:
 
   - http-client:
       application-name: RegistryOffice
-      release-number: 2.1.0
-      uuid: atlt-1-0-0-http-c-ro-2-1-0-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-ro-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port: 3024
-      uuid: atlt-1-0-0-tcp-c-ro-2-1-0-000
+      tcp-port: 3031
+      uuid: atlt-1-0-2-tcp-c-ro-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v2/register-application
-            uuid: atlt-1-0-0-op-c-bm-ro-2-1-0-000
+            uuid: atlt-1-0-2-op-c-bm-ro-2-1-2-000
           - operation-name: /v1/relay-server-replacement
-            uuid: atlt-1-0-0-op-c-bm-ro-2-1-0-001
+            uuid: atlt-1-0-2-op-c-bm-ro-2-1-2-001
           - operation-name: /v1/deregister-application
-            uuid: atlt-1-0-0-op-c-bm-ro-2-1-0-002
+            uuid: atlt-1-0-2-op-c-bm-ro-2-1-2-002
           - operation-name: /v1/relay-operation-update
-            uuid: atlt-1-0-0-op-c-bm-ro-2-1-0-003
+            uuid: atlt-1-0-2-op-c-bm-ro-2-1-2-003
         individual:
       service:
         basic:
@@ -130,13 +130,13 @@ clients:
 
   - http-client:
       application-name: TypeApprovalRegister
-      release-number: 2.0.1
-      uuid: atlt-1-0-0-http-c-tar-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-tar-2-1-2-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.3.9
-      tcp-port: 3009
-      uuid: atlt-1-0-0-tcp-c-tar-2-0-1-000
+      ip-address: 127.0.0.1
+      tcp-port: 3032
+      uuid: atlt-1-0-2-tcp-c-tar-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -147,18 +147,18 @@ clients:
 
   - http-client:
       application-name: ExecutionAndTraceLog
-      release-number: 2.0.1
-      uuid: atlt-1-0-0-http-c-eatl-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-eatl-2-1-2-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.3.10
-      tcp-port: 3010
-      uuid: atlt-1-0-0-tcp-c-eatl-2-0-1-000
+      ip-address: 127.0.0.1
+      tcp-port: 3033
+      uuid: atlt-1-0-2-tcp-c-eatl-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/record-service-request
-            uuid: atlt-1-0-0-op-c-bs-eatl-2-0-1-000
+            uuid: atlt-1-0-2-op-c-bs-eatl-2-1-2-000
         individual:
       service:
         basic:
@@ -166,18 +166,18 @@ clients:
 
   - http-client:
       application-name: OamLog
-      release-number: 2.0.1
-      uuid: atlt-1-0-0-http-c-ol-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-ol-2-1-2-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.3.11
-      tcp-port: 3011
-      uuid: atlt-1-0-0-tcp-c-ol-2-0-1-000
+      ip-address: 127.0.0.1
+      tcp-port: 3034
+      uuid: atlt-1-0-2-tcp-c-ol-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/record-oam-request
-            uuid: atlt-1-0-0-op-c-bs-ol-2-0-1-000
+            uuid: atlt-1-0-2-op-c-bs-ol-2-1-2-000
         individual:
       service:
         basic:
@@ -185,18 +185,18 @@ clients:
 
   - http-client:
       application-name: AccessAdministration
-      release-number: 2.1.1
-      uuid: atlt-1-0-0-http-c-aa-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-aa-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port: 3028
-      uuid: atlt-1-0-0-tcp-c-aa-2-0-1-000
+      tcp-port: 3035
+      uuid: atlt-1-0-2-tcp-c-aa-2-1-2-000
     operation-clients:
       own-oam:
         basic:
-          - operation-name: /v1/approve-oam-request
-            uuid: atlt-1-0-0-op-c-bs-aa-2-0-1-000
+          - operation-name: /v1/approve-basic-auth-request
+            uuid: atlt-1-0-2-op-c-bs-aa-2-1-2-000
         individual:
       service:
         basic:
@@ -204,28 +204,28 @@ clients:
 
   - http-client:
       application-name: ApplicationLayerTopology
-      release-number: 2.0.1
-      uuid: atlt-1-0-0-http-c-alt-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-alt-2-1-2-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.3.13
-      tcp-port: 3013
-      uuid: atlt-1-0-0-tcp-c-alt-2-0-1-000
+      ip-address: 127.0.0.1
+      tcp-port: 3036
+      uuid: atlt-1-0-2-tcp-c-alt-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/update-all-ltps-and-fcs
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-000
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-000
           - operation-name: /v1/update-ltp
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-001
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-001
           - operation-name: /v1/delete-ltp-and-dependents
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-002
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-002
           - operation-name: /v1/update-fc
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-003
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-003
           - operation-name: /v1/update-fc-port
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-004
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-004
           - operation-name: /v1/delete-fc-port
-            uuid: atlt-1-0-0-op-c-bm-alt-2-0-1-005
+            uuid: atlt-1-0-2-op-c-bm-alt-2-1-2-005
         individual:
       service:
         basic:
@@ -233,13 +233,13 @@ clients:
 
   - http-client:
       application-name: OperationKeyManagement
-      release-number: 2.0.1
-      uuid: atlt-1-0-0-http-c-okm-2-0-1-000
+      release-number: 2.1.2
+      uuid: atlt-1-0-2-http-c-okm-2-1-2-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.3.14
-      tcp-port: 3014
-      uuid: atlt-1-0-0-tcp-c-okm-2-0-1-000
+      ip-address: 127.0.0.1
+      tcp-port: 3037
+      uuid: atlt-1-0-2-tcp-c-okm-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -250,13 +250,13 @@ clients:
 
   - http-client:
       application-name: MicroWaveDeviceInventory
-      release-number: 1.1.1
-      uuid: atlt-1-0-0-http-c-mwdi-1-1-1-000
+      release-number: 1.1.2
+      uuid: atlt-1-0-2-http-c-mwdi-1-2-0-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.15
+      ip-address: 127.0.0.1
       tcp-port: 4015
-      uuid: atlt-1-0-0-tcp-c-mwdi-1-1-1-000
+      uuid: atlt-1-0-2-tcp-c-mwdi-1-2-0-000
     operation-clients:
       own-oam:
         basic:
@@ -267,10 +267,10 @@ clients:
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
             # with fields filter: ?fields=top-level-equipment
             # with fields filter: ?fields=logical-termination-point(uuid;ltp-augment-1-0:ltp-augment-pac(equipment;connector))
-            uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-000
+            uuid: atlt-1-0-2-op-c-is-mwdi-1-2-0-000
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}
             # with fields filter: ?fields=contained-holder(occupying-fru;equipment-augment-1-0:holder-pac(sequence-id));connector(local-id;equipment-augment-1-0:connector-pac(sequence-id))
-            uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-001
+            uuid: atlt-1-0-2-op-c-is-mwdi-1-2-0-001
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}
             # with fields filter: ?fields=server-ltp;client-ltp;layer-protocol(layer-protocol-name)
-            uuid: atlt-1-0-0-op-c-is-mwdi-1-1-1-002
+            uuid: atlt-1-0-2-op-c-is-mwdi-1-2-0-002

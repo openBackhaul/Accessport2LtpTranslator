@@ -20,5 +20,13 @@ Other applications require it for addressing live network resources.
 - [MicroWaveDeviceInventory](https://github.com/openBackhaul/MicroWaveDeviceInventory)
 - The sequence-id attribute needs to be supported by the vendors.
 
+### Latest Update
+
+The v1.0.2 release adds the following specification changes:  
+- update the specification to use the new ApplicationPattern release 2.1.2
+- operation client update for MWDI to the latest MWDI spec version 1.2.0
+
+There were no additions or changes to individual services.  
+
 ### Comments
 ./.

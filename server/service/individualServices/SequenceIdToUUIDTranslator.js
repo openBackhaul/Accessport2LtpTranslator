@@ -193,8 +193,8 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
             let sequenceID = inputSequenceID.substring(1); //convert "h1" to "1"
 
             let matchingHolderUUID = undefined;
-            if (inputSequenceID.startsWith("h")) {
 
+            if (inputSequenceID.startsWith("h")) {
                 if (holdersToQuery.length < 1) {
                     logger.warn("no holders in result");
                     validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_NoHoldersInResult;
@@ -288,8 +288,7 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                     }
                 }
             }
-
-            if (inputSequenceID.startsWith("c")) {
+            else if (inputSequenceID.startsWith("c")) {
                 if (connectorsToQuery.length < 1) {
                     logger.error("step3 no connectors in result");
                     validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_NoConnectorsInResult;
@@ -333,6 +332,11 @@ async function step3ReadingEquipmentDataInHolder(stringOfConcatenatedSequenceIDs
                         break;
                     }
                 }
+            }
+            else {
+                logger.error("invalid sequenceId: " + inputSequenceID);
+                validationErrorStep3 = ServiceError.ReadingEquipmentDataInHolder_InvalidSequenceId;
+                break;
             }
         }
     } catch (exception) {
@@ -429,29 +433,27 @@ async function step1ReadingUuidsOfTopLevelEquipment(mountName, topLevelEquipment
         if (validResultOfStep1 === false) {
             logger.error("step1 result not successful, mwdi reported: " + step1ResultWrapper?.code + " " + step1ResultWrapper?.message);
             validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoResponse;
+        } else if (step1ResultWrapper["core-model-1-4:control-construct"].length === 0) {
+            logger.error("no top level equipment list in result");
+            validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoResponse;
         } else {
-            if (step1ResultWrapper["core-model-1-4:control-construct"].length === 0) {
-                logger.error("no top level equipment list in result");
-                validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoResponse;
-            } else {
-                equipmentList = step1ResultWrapper["core-model-1-4:control-construct"][0]["top-level-equipment"];
+            equipmentList = step1ResultWrapper["core-model-1-4:control-construct"][0]["top-level-equipment"];
 
-                if (topLevelEquipmentUUID) {
-                    //validate uuid against list of top level uuids
-                    if (equipmentList.includes(topLevelEquipmentUUID) === false) {
-                        logger.error("provided topLevelEquipmentUUID not contained in MWDI listOfTopLevelUUIDs");
-                        validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_TopLevelUuidProvidedAndNotContainedInTopLevelUuids;
-                    }
+            if (topLevelEquipmentUUID) {
+                //validate uuid against list of top level uuids
+                if (equipmentList.includes(topLevelEquipmentUUID) === false) {
+                    logger.error("provided topLevelEquipmentUUID not contained in MWDI listOfTopLevelUUIDs");
+                    validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_TopLevelUuidProvidedAndNotContainedInTopLevelUuids;
                 }
-                //no topLevelEquipmentUUID provided (optional parameter)
-                else if (equipmentList.length > 1) {
-                    //list not valid - too many entries
-                    logger.error("too many entries in returned topLevelUUIDs");
-                    validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoTopLevelUuidProvidedAndMoreThanOneTopLevelEquipmentUuid;
-                } else if (equipmentList.length === 0) {
-                    logger.error("no entries in returned topLevelUUIDs");
-                    validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoResults;
-                }
+            }
+            //no topLevelEquipmentUUID provided (optional parameter)
+            else if (equipmentList.length > 1) {
+                //list not valid - too many entries
+                logger.error("too many entries in returned topLevelUUIDs");
+                validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoTopLevelUuidProvidedAndMoreThanOneTopLevelEquipmentUuid;
+            } else if (equipmentList.length === 0) {
+                logger.error("no entries in returned topLevelUUIDs");
+                validationErrorStep1 = ServiceError.ReadingUuidsOfTopLevelEquipment_NoResults;
             }
         }
     } catch (exception) {
