@@ -925,8 +925,10 @@
               "tcp-server-interface-configuration": {
                 "description": "Without TLS layer",
                 "local-protocol": "tcp-server-interface-1-0:PROTOCOL_TYPE_HTTP",
-                "local-address": {},
-                "local-port": 3001
+                "local-address": {
+                  "ipv-4-address": "127.0.0.1"
+                },
+                "local-port": 4003
               }
             }
           }
@@ -971,8 +973,8 @@
             "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
-                "application-name": "OldApplicationName",
-                "release-number": "34.2.6"
+                "application-name": "OldRelease",
+                "release-number": "1.0.1"
               }
             }
           }
@@ -994,10 +996,55 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.3.1"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 4003
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "atlt-1-0-2-http-c-nr-1-0-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [],
+        "server-ltp": [
+          "atlt-1-0-2-tcp-c-nr-1-0-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
+            "http-client-interface-1-0:http-client-interface-pac": {
+              "http-client-interface-configuration": {
+                "application-name": "NewRelease",
+                "release-number": "1.0.2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "atlt-1-0-2-tcp-c-nr-1-0-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "atlt-1-0-2-http-c-nr-1-0-2-000"
+        ],
+        "server-ltp": [],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
+            "tcp-client-interface-1-0:tcp-client-interface-pac": {
+              "tcp-client-interface-configuration": {
+                "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
+                "remote-address": {
+                  "ip-address": {
+                    "ipv-4-address": "127.0.0.1"
+                  }
+                },
+                "remote-port": 4003
               }
             }
           }
@@ -1117,8 +1164,8 @@
             "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
-                "application-name": "RegistrationApplication",
-                "release-number": "43.2.5"
+                "application-name": "RegistryOffice",
+                "release-number": "2.1.2"
               }
             }
           }
@@ -1140,10 +1187,10 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.3.1"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 3031
               }
             }
           }
@@ -1195,6 +1242,78 @@
         ]
       },
       {
+        "uuid": "atlt-1-0-2-op-c-bs-eatl-2-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [],
+        "server-ltp": [
+          "atlt-1-0-2-http-c-eatl-2-1-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-client-interface-1-0:operation-client-interface-pac": {
+              "operation-client-interface-configuration": {
+                "operation-name": "/v1/record-service-request",
+                "operation-key": "Operation key not yet provided.",
+                "detailed-logging-is-on": false
+              },
+              "operation-client-interface-status": {
+                "operational-state": "operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED",
+                "life-cycle-state": "operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "atlt-1-0-2-http-c-eatl-2-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "atlt-1-0-2-op-c-bs-eatl-2-1-2-000"
+        ],
+        "server-ltp": [
+          "atlt-1-0-2-tcp-c-eatl-2-1-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
+            "http-client-interface-1-0:http-client-interface-pac": {
+              "http-client-interface-configuration": {
+                "application-name": "ExecutionAndTraceLog",
+                "release-number": "2.1.2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "atlt-1-0-2-tcp-c-eatl-2-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "atlt-1-0-2-http-c-eatl-2-1-2-000"
+        ],
+        "server-ltp": [],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
+            "tcp-client-interface-1-0:tcp-client-interface-pac": {
+              "tcp-client-interface-configuration": {
+                "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
+                "remote-address": {
+                  "ip-address": {
+                    "ipv-4-address": "127.0.0.1"
+                  }
+                },
+                "remote-port": 3033
+              }
+            }
+          }
+        ]
+      },
+      {
         "uuid": "atlt-1-0-2-op-c-bs-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [],
@@ -1233,8 +1352,8 @@
             "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
-                "application-name": "LoggingApplication",
-                "release-number": "54.3.2"
+                "application-name": "OamLog",
+                "release-number": "2.1.2"
               }
             }
           }
@@ -1256,10 +1375,10 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.3.1"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 3034
               }
             }
           }
@@ -1278,7 +1397,7 @@
             "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-client-interface-1-0:operation-client-interface-pac": {
               "operation-client-interface-configuration": {
-                "operation-name": "/v1/approve-basic-auth-request",
+                "operation-name": " /v1/approve-basic-auth-request",
                 "operation-key": "Operation key not yet provided."
               },
               "operation-client-interface-status": {
@@ -1304,8 +1423,8 @@
             "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
-                "application-name": "AccessApplication",
-                "release-number": "43.2.4"
+                "application-name": "AccessAdministration",
+                "release-number": "2.1.2"
               }
             }
           }
@@ -1327,10 +1446,10 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.3.1"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 3035
               }
             }
           }
@@ -1500,8 +1619,8 @@
             "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
-                "application-name": "InventoryApplication",
-                "release-number": "54.1.3"
+                "application-name": "ApplicationLayerTopology",
+                "release-number": "2.1.2"
               }
             }
           }
@@ -1523,10 +1642,10 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.3.1"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 3036
               }
             }
           }
@@ -1920,6 +2039,11 @@
                 "local-id": "118",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "atlt-1-0-2-op-s-is-000"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "atlt-1-0-2-op-c-bs-eatl-2-1-2-000"
               }
             ]
           },
